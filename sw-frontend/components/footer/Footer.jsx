@@ -30,7 +30,7 @@ const Footer = () => {
                 <div className="copy-area">
                   <p>
                     {" "}
-                    Copyright © <Link href="/">StakeWise</Link> | Designed by Steve and Victa for <a href="https://constellation-hackathon.devpost.com/" target="_blank">Chainlink Constellation Hackathon (2023)</a>
+                    Copyright © <Link href="/">StakeWise</Link> | Designed by Steve and Victa for <a href="https://constellation-hackathon.devpost.com/" rel="noreferrer" target="_blank">Chainlink Constellation Hackathon (2023)</a>
                     
                   </p>
                 </div>

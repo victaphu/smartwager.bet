@@ -18,7 +18,7 @@ const WithdrawTab = () => {
       "type": "function"
     }],
     chainId: 80001,
-    functionName: 'mintToken'
+    functionName: "mintToken"
   });
 
   const { write, isLoading } = useContractWrite(config);
@@ -100,7 +100,7 @@ const WithdrawTab = () => {
                 <div className="single-item">
                   <h6>Important :</h6>
                   <p>
-                    This is a demo, so if you're out of Mumbai tokens go grab some using a faucet. You can also mint a few free NFTs to test out Smart Wager
+                    This is a demo, so if you are out of Mumbai tokens go grab some using a faucet. You can also mint a few free NFTs to test out Smart Wager
                   </p>
                 </div>
                 <div className="single-item">

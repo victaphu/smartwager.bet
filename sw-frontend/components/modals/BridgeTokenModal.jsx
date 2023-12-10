@@ -25,7 +25,7 @@ const BridgeTokenModal = ({ chainSelector, escrowAddress, nftAddress, sourceChai
       "type": "function"
     }],
     chainId: 80001,
-    functionName: 'mintToken'
+    functionName: "mintToken"
   });
 
   const { writeAsync, isLoading } = useContractWrite(config);
@@ -50,12 +50,12 @@ const BridgeTokenModal = ({ chainSelector, escrowAddress, nftAddress, sourceChai
         });
 
         if (owner === ethers.ZeroAddress) {
-          console.log('breaking after ', i);
+          console.log("breaking after ", i);
           break;
         }
 
         if (owner === address) {
-          nfts.push({ id: i, name: 'NFT ' + i });
+          nfts.push({ id: i, name: "NFT " + i });
         }
       }
       catch (e) {
@@ -84,31 +84,31 @@ const BridgeTokenModal = ({ chainSelector, escrowAddress, nftAddress, sourceChai
       const encoded = await client.readContract({
         address: escrowAddress,
         abi: chainlinkTokenEscrowServiceABI,
-        functionName: 'getEncoded',
+        functionName: "getEncoded",
         args: [chainSelector, 0] // pay in eth
       });
-      console.log('encoded is', encoded);
+      console.log("encoded is", encoded);
       const feeEstimate = await client.readContract({
         address: escrowAddress,
         abi: chainlinkTokenEscrowServiceABI,
-        functionName: 'getFeeEstimate',
+        functionName: "getFeeEstimate",
         args: [nftAddress, address, tokenId, encoded]
       });
 
-      console.log('fee estimate is', feeEstimate);
+      console.log("fee estimate is", feeEstimate);
       const request = await prepareSendTransaction({
         to: escrowAddress,
         value: feeEstimate
       });
-      console.log('transfer completed');
+      console.log("transfer completed");
       const receipt = await sendTransaction(request);
       await waitForTransaction(receipt);
 
-      console.log('lets send the nft!');
+      console.log("lets send the nft!");
       const request2 = await prepareWriteContract({
         address: nftAddress,
         abi: erc721ABI,
-        functionName: 'safeTransferFrom',
+        functionName: "safeTransferFrom",
         args: [address, escrowAddress, tokenId, encoded]
       });
 
@@ -154,7 +154,7 @@ const BridgeTokenModal = ({ chainSelector, escrowAddress, nftAddress, sourceChai
                       {nfts.length > 0 && <h6>Select NFT to Bridge</h6>}
                       {nfts.length > 0 && <Select data={nfts} onChange={(e) => setTokenId(e.id)} />}
                       {nfts.length == 0 && <div>
-                        <p>You don't have any NFTs, why not claim a free NFT and try us out?</p>
+                        <p>You do not have any NFTs, why not claim a free NFT and try us out?</p>
                         <button disabled={isLoading} onClick={async (e) => {
                           const res = await writeAsync?.();
                           await waitForTransaction(res);

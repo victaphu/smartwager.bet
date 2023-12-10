@@ -17,7 +17,7 @@ const DepositTab = () => {
       "type": "function"
     }],
     chainId: 80001,
-    functionName: 'mintToken'
+    functionName: "mintToken"
   });
 
   const { write, isLoading } = useContractWrite(config);
@@ -91,16 +91,16 @@ const DepositTab = () => {
                 </div>
 
                 <p>Faucets</p>
-                <div className="input-area" style={{textAlign: 'center'}}>
-                  <button type="button" className="cmn-btn firstTeam" onClick={() => window.open('https://faucet.polygon.technology/')}>Get more Matic</button>
-                  <button type="button" className="cmn-btn firstTeam" onClick={() => window.open('https://sepoliafaucet.com/')}>Get more Sepolia</button>
+                <div className="input-area" style={{textAlign: "center"}}>
+                  <button type="button" className="cmn-btn firstTeam" onClick={() => window.open("https://faucet.polygon.technology/")}>Get more Matic</button>
+                  <button type="button" className="cmn-btn firstTeam" onClick={() => window.open("https://sepoliafaucet.com/")}>Get more Sepolia</button>
                 </div>
               </div>
               <div className="bottom-area">
                 <div className="single-item">
                   <h6>Important :</h6>
                   <p>
-                    This is a demo, so if you're out of Mumbai tokens go grab some using a faucet. You can also mint a few free NFTs to test out StakeWise.Bet
+                    This is a demo, so if you are out of Mumbai tokens go grab some using a faucet. You can also mint a few free NFTs to test out StakeWise.Bet
                   </p>
                 </div>
                 <div className="single-item">

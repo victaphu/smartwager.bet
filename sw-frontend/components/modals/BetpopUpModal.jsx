@@ -19,7 +19,7 @@ const BetpopUpModal = () => {
       setHome(e.relatedTarget.dataset.home);
       setAway(e.relatedTarget.dataset.away);
       setGameId(e.relatedTarget.dataset.id);
-      setEventDate(e.relatedTarget.dataset.eventdate);
+      setEventDate(+e.relatedTarget.dataset.eventdate);
     };
     document.getElementById('betpop-up').addEventListener('show.bs.modal', handler);
 
@@ -122,18 +122,6 @@ const BetpopUpModal = () => {
                       </div>
                     </div>
                     <div className="bottom-area">
-                      <div className="fee-area">
-                        <p>
-                          Winner will get: <span className="amount">0.179</span>{" "}
-                          ETH
-                        </p>
-                        <p className="fee">
-                          Escrow Fee: <span>5%</span>
-                        </p>
-                      </div>
-                      <div className="btn-area">
-                        <button>Make (0.1 ETH) Bet</button>
-                      </div>
                       <div className="bottom-right">
                         <p>Game Closes:</p>
                         <p className="date-area">

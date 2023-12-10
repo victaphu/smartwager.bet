@@ -43,6 +43,12 @@ const BetpopUpModal = () => {
 
   const [games, setGames] = useState(_games);
 
+  const updateGame = (gameId) => {
+    games.find(e=>e.gameId === gameId).player1 = true
+    games.find(e=>e.gameId === gameId).player2 = true
+    setGames([...games]);
+  }
+
   useEffect(() => {
     const handler = (e) => {
       console.log(e.relatedTarget.dataset);
@@ -99,13 +105,13 @@ const BetpopUpModal = () => {
                           <div className="team-single" style={{"flexGrow": "1"}}>
                             <span className="mdr">Home</span>
                             <div className="img-area">
-                              <img src={game.player1 ? img1 : "https://s3.eu-central-1.amazonaws.com/join.marketing/uploads/2018/07/Nieuw-logo-blauw.png"} alt="image" style={{"width": "200px"}}/>
+                              <img onClick={() => !game.player1 && updateGame(game.gameId)} src={game.player1 ? img1 : "https://s3.eu-central-1.amazonaws.com/join.marketing/uploads/2018/07/Nieuw-logo-blauw.png"} alt="image" style={{"width": "200px"}}/>
                             </div>
                           </div>
                           <div className="team-single" style={{"flexGrow": "1"}}>
                             <span className="mdr">Away</span>
                             <div className="img-area" style={{"width": "200px"}}>
-                              <img src={game.player2 ? img2 : "https://s3.eu-central-1.amazonaws.com/join.marketing/uploads/2018/07/Nieuw-logo-blauw.png"} alt="image" />
+                              <img onClick={() => !game.player2 && updateGame(game.gameId)} src={game.player2 ? img2 : "https://s3.eu-central-1.amazonaws.com/join.marketing/uploads/2018/07/Nieuw-logo-blauw.png"} alt="image" />
                             </div>
                           </div>
                         </div>

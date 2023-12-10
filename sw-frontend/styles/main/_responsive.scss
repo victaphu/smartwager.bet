@@ -1,0 +1,1177 @@
+// Responsive Area
+@media screen and (min-width: 399px) and (max-width: 768px) {
+}
+
+@media screen and (min-width: 1399px) and (max-width: 1499px) {
+  .counter-section::before {
+    width: 95%;
+    left: 2%;
+  }
+}
+
+@media screen and (min-width: 1499px) and (max-width: 1750px) {
+  .about-StakeWise .overlay .shape-area .obj-1 {
+    right: 0;
+    width: 6%;
+  }
+}
+
+@media (max-width: 1799px) {
+  .banner-section .overlay {
+    background-size: 45%, 80%;
+  }
+  .how-it-works::before {
+    background-size: 120%;
+    background-position: top center;
+  }
+  .banner-section.affiliate .overlay .banner-content .content-shape img {
+    right: 35%;
+    bottom: 40%;
+    width: 20%;
+  }
+  .banner-section.currency-bet.escrow-bets-banner
+    .overlay
+    .shape-area
+    .chart-illu {
+    width: 20%;
+  }
+  .banner-section.faqs .overlay .shape-area .faqs-illu {
+    width: 25%;
+  }
+  .banner-section.tournaments .overlay .banner-content .content-shape img {
+    right: 20%;
+    bottom: -30%;
+    width: 20%;
+  }
+  .banner-section.tournaments .overlay .shape-area img {
+    right: 0;
+    bottom: 0;
+    width: 30%;
+  }
+  .banner-section.blog .overlay .shape-area img {
+    width: 25%;
+  }
+}
+
+@media (max-width: 1499px) {
+  .about-StakeWise .overlay .shape-area {
+    display: none;
+  }
+  .banner-section.soccer-bets .overlay {
+    background-position: bottom -40px right 150px, top 95px right 150px;
+    background-size: 50% 85%;
+  }
+}
+
+@media (max-width: 1399px) {
+  .banner-section .overlay .banner-content .container .content-shape .obj-4 {
+    left: calc(50%);
+    bottom: calc(-40%);
+  }
+  .banner-section .overlay .banner-content .container .content-shape .obj-3 {
+    right: 20%;
+    left: initial;
+    bottom: calc(0%);
+  }
+  .banner-section .overlay .banner-content .container .content-shape .obj-2 {
+    left: 36%;
+    bottom: calc(-10%);
+  }
+  .counter-section {
+    padding: 40px 30px 30px;
+  }
+  .counter-section .single-area .img-area {
+    width: 25%;
+  }
+  .bet-this-game .single-area .main-content .mid-area .countdown {
+    padding: 10px;
+  }
+  .bet-this-game .single-area .main-content .team-single .img-area {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .bet-this-game .single-area .main-content {
+    margin: 50px 25px 40px;
+  }
+  .currency-bet-section .table-responsive .table {
+    width: 110%;
+  }
+  .dashboard-content .google-authentication ul {
+    padding-bottom: 0;
+    justify-content: center;
+    li {
+      margin-bottom: 10px;
+    }
+  }
+  .banner-section.contact .overlay .shape-area .contact-illu {
+    width: 45%;
+  }
+}
+
+@media (max-width: 1299px) {
+  .counter-section::before {
+    width: 94%;
+    left: 3%;
+  }
+  .banner-section.soccer-bets .shape-area img {
+    display: none;
+  }
+  .banner-section.escrow-bets-banner .banner-content {
+    padding: 210px 0 110px;
+  }
+}
+
+@media (max-width: 1250px) {
+  .testimonails-section .slick-slide {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 1199px) {
+  h1,
+  h1 > a {
+    font-size: 57px;
+    line-height: 74.1px;
+    margin-top: -16px;
+  }
+  h2,
+  h2 > a {
+    font-size: 43px;
+    line-height: 55.9px;
+    margin-top: -10px;
+  }
+  .header-section .navbar .navbar-collapse .navbar-nav .nav-item .nav-link,
+  .header-section
+    .navbar
+    .navbar-collapse
+    .navbar-nav
+    .nav-item
+    .dropdown-item {
+    font-size: 16px;
+  }
+  .banner-section .overlay .banner-content {
+    padding: 220px 0 230px;
+  }
+  .banner-section.inner-banner .overlay .banner-content {
+    padding: 215px 0 100px;
+  }
+  .banner-section.inner-banner.soccer-bets .overlay .banner-content {
+    padding: 220px 0 230px;
+  }
+  .banner-section.inner-banner.escrow-bets-banner .overlay .banner-content {
+    padding: 220px 0 110px;
+  }
+  .banner-section.inner-banner.tournaments .overlay .banner-content {
+    padding: 215px 0 180px;
+  }
+  .banner-section.inner-banner.contact .overlay .banner-content {
+    padding: 215px 0 230px;
+  }
+  .header-section .navbar .navbar-collapse .right-area {
+    margin-left: 20px;
+  }
+  .header-section.user-dashboard .navbar-collapse .right-area {
+    margin-left: -25px;
+  }
+  .header-section.user-dashboard
+    .navbar-collapse
+    .right-area
+    .single-item
+    .nice-select {
+    padding-right: 20px;
+    &::after {
+      right: 5px;
+    }
+  }
+  .how-it-works::before {
+    width: 100%;
+    background-color: #0d102f;
+    background-image: unset;
+    height: 60%;
+  }
+  .counter-section .cus-mar {
+    margin-bottom: -20px;
+  }
+  .counter-section .single-area {
+    margin-bottom: 30px;
+  }
+  .bet-this-game .single-area .main-content {
+    margin: 50px 10px 40px;
+  }
+  .bet-this-game .single-area .main-content .mid-area .countdown {
+    padding: 2px;
+  }
+  .bet-this-game .single-area .bottom-item {
+    padding: 20px;
+  }
+  .bet-this-game .single-area .bottom-item .cmn-btn {
+    padding: 10px 16px;
+  }
+  .banner-section.affiliate .overlay .banner-content .content-shape img {
+    display: none;
+  }
+  .banner-section.affiliate .overlay .shape-area img {
+    width: 30%;
+  }
+  .banner-section .overlay .banner-content .container .content-shape img,
+  .banner-section.soccer-bets .shape-area img {
+    display: none;
+  }
+  .bet-this-game.all-soccer-bets .filter-section form {
+    margin-bottom: -30px;
+  }
+  .bet-this-game.all-soccer-bets .filter-section .nice-select,
+  .bet-this-game.all-soccer-bets .filter-section .input-area {
+    margin-bottom: 30px;
+  }
+  .currency-bet-section .table-responsive .table {
+    width: 120%;
+  }
+  .create-future-currency .main-content .single-input .nice-select {
+    width: 40%;
+  }
+  .tournaments-section .single-item .mid-area ul {
+    display: grid;
+    margin: 15px 0 5px;
+    li {
+      margin-bottom: 15px;
+    }
+  }
+  .dashboard-content .tab-content .single-info {
+    margin-bottom: 20px;
+  }
+  .dashboard-content .tab-content h5.title {
+    margin-top: 20px;
+  }
+  .dashboard-content .tab-content .table-responsive .table {
+    margin-bottom: 0;
+    width: 140%;
+  }
+  .dashboard-content .deposit-with-tab .balance-area {
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 991px) {
+  // Normalize
+  h1,
+  h1 > a {
+    font-size: 57px;
+    line-height: 68.4px;
+    margin-top: -16px;
+  }
+
+  h2,
+  h2 > a {
+    font-size: 43px;
+    line-height: 51.6px;
+    margin-top: -10px;
+  }
+
+  h3,
+  h3 > a {
+    font-size: 32px;
+    line-height: 38.4px;
+    margin-top: -8px;
+  }
+
+  h4,
+  h4 > a {
+    font-size: 24px;
+    line-height: 28px;
+    margin-top: -6px;
+  }
+
+  h5,
+  h5 > a {
+    font-size: 18px;
+    line-height: 22px;
+    margin-top: -4px;
+  }
+
+  h6,
+  h6 > a,
+  table thead tr th,
+  a,
+  p,
+  span,
+  li {
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  .section-header {
+    margin-top: -8px;
+    margin-bottom: 40px;
+  }
+
+  .title {
+    margin-bottom: 20px;
+  }
+
+  .xxlr {
+    font-size: 20px;
+    line-height: 28px;
+  }
+  .xlr {
+    font-size: 18px;
+    line-height: 25.5px;
+  }
+
+  // Header Responsive
+  .header-section .navbar-toggler {
+    display: inline-block;
+  }
+  .header-section .navbar .navbar-brand {
+    margin-top: -5px;
+    width: 35%;
+  }
+  .header-section .navbar .navbar-brand img {
+    max-width: initial;
+  }
+  .header-section .navbar .navbar-collapse .navbar-nav {
+    height: 200px;
+    margin: 20px 0;
+    overflow-y: auto;
+    margin-bottom: 10px;
+  }
+  .header-section
+    .navbar
+    .navbar-collapse
+    .navbar-nav
+    .nav-item
+    .dropdown-menu
+    .dropend
+    .dropdown-menu {
+    left: 70%;
+    min-width: 180px;
+  }
+  .header-section .nav-item.main-navbar .main-menu .sub-navbar .sub-menu {
+    right: 0;
+  }
+  .header-section
+    .navbar
+    .navbar-collapse
+    .navbar-nav
+    .nav-item
+    .dropdown-menu.show {
+    display: inline-block;
+    margin-left: 130px;
+  }
+  .header-section
+    .navbar
+    .navbar-collapse
+    .navbar-nav
+    .nav-item
+    .dropdown-menu {
+    display: none;
+  }
+  .header-section .navbar .navbar-collapse .navbar-nav .nav-item {
+    padding: 8px 0;
+  }
+  .header-section .nav-item.dropdown .dropdown-menu {
+    position: initial;
+  }
+  .header-section .navbar .navbar-collapse .right-area .lang {
+    display: none !important;
+  }
+  .header-section .navbar .navbar-collapse .right-area {
+    margin-left: 0;
+  }
+  // End Header
+
+  .header-section.user-dashboard .navbar-collapse .right-area .single-item {
+    margin-right: 20px;
+    margin-left: 0;
+  }
+  .header-section.user-dashboard
+    .navbar-collapse
+    .right-area
+    .single-item
+    .nice-select {
+    padding-left: 10px;
+  }
+  .header-section.user-dashboard .navbar .navbar-collapse.collapsing {
+    display: none;
+  }
+  .header-section.user-dashboard
+    .navbar-collapse
+    .right-area
+    .single-item
+    .main-area {
+    left: 0;
+  }
+  .banner-section .overlay {
+    background-size: 0, 60%;
+  }
+  .banner-section.soccer-bets .overlay {
+    background-size: 0;
+  }
+  .about-StakeWise .left-side {
+    display: none;
+  }
+  .how-it-works .main-content ul {
+    margin-bottom: 10px;
+  }
+  .bet-this-game .single-area .main-content .mid-area .countdown {
+    padding: 10px 20px;
+  }
+  .bet-this-game .single-area .main-content {
+    margin: 50px 20px 40px;
+  }
+  .amazing-features::before {
+    background-size: 175% 74%;
+  }
+  .more-features .img-area {
+    width: 60%;
+    padding-top: 40px;
+    margin: auto;
+  }
+  .affilliate-section .img-area {
+    text-align: center;
+    img {
+      width: 60%;
+      padding-top: 30px;
+    }
+  }
+  .betpopmodal
+    .modal
+    .modal-dialog
+    .modal-content
+    .modal-body
+    .mid-area
+    .quick-amounts {
+    padding: 0 25px;
+  }
+  .testimonails-section .testimonails-carousel {
+    padding-bottom: 70px;
+  }
+  .features-section .section-img-area {
+    display: none;
+  }
+  .StakeWise-affiliates .img-area {
+    text-align: center;
+    img {
+      margin-top: 30px;
+      width: 60%;
+    }
+  }
+  .bet-this-game .sidebar {
+    margin-bottom: 30px;
+  }
+  .call-to-action .d-rtl {
+    text-align: center;
+    img {
+      margin-top: 30px;
+      width: 60%;
+    }
+  }
+  .currency-bet-section .table-responsive .table {
+    width: 155%;
+  }
+  .betting-details .main-content .escrow-bet-single .left-area {
+    margin-right: 30px;
+  }
+  .betting-details .main-content .table-responsive .table {
+    width: 115%;
+  }
+  .betting-details .main-content .escrow-bet-single .right-area {
+    width: 50%;
+  }
+  .escrow-bets-fee .single-item img {
+    width: 30%;
+  }
+  .create-future-currency
+    .main-content
+    .single-input
+    .input-items
+    input:last-child {
+    width: 42%;
+  }
+  .create-future-currency .main-content .single-input .nice-select {
+    width: 23%;
+  }
+  .how-works-tournaments {
+    overflow-x: initial;
+    .cus-mar {
+      margin-bottom: -25px;
+      .single-area {
+        margin-bottom: 25px;
+      }
+    }
+  }
+  .tournaments-section .single-item {
+    display: grid;
+    .last-item {
+      padding: 40px 120px;
+      margin-top: 30px;
+    }
+  }
+  .how-works-tournaments.tournaments-section {
+    margin-bottom: 25px;
+  }
+  .blog-section .sidebar-blog {
+    margin-top: 40px;
+  }
+  .dashboard-content {
+    margin-top: 48px;
+  }
+  .dashboard-content .tab-content {
+    margin-top: 30px;
+  }
+  .dashboard-content .bets-tab ul {
+    margin-bottom: 0;
+  }
+  .dashboard-content .dashboard-heading ul li .nav-link {
+    padding: 20px 12px;
+  }
+  .error-section .section-text {
+    margin-top: 40px;
+  }
+}
+
+@media (max-width: 767px) {
+  .banner-section .overlay .banner-content {
+    padding: 200px 0 190px;
+  }
+  .banner-section .overlay {
+    background-size: 0, 0;
+  }
+  .footer-section .menu-item .footer-link li {
+    padding-right: 10px;
+    margin-right: 10px;
+  }
+  .footer-section .copyright {
+    display: grid;
+    justify-content: center;
+    text-align: center;
+    .copy-area {
+      order: 1;
+    }
+    .social-link {
+      justify-content: center;
+      margin-bottom: 10px;
+      a {
+        margin: 10px;
+      }
+    }
+  }
+  .footer-section .newsletter {
+    padding: 60px;
+  }
+  .footer-section {
+    position: relative;
+    background-image: unset;
+    &::before {
+      content: "";
+      width: 100%;
+      height: 65%;
+      bottom: 0;
+      background-color: rgb(41, 27, 107);
+      position: absolute;
+      z-index: -1;
+    }
+  }
+  .faqs-section .accordion .accordion-item .accordion-button {
+    padding-right: 60px;
+  }
+  .counter-section .single-area .img-area {
+    width: 20%;
+  }
+  .amazing-features .single-slide .slide-content img,
+  .about-StakeWise .single-item img {
+    width: 40%;
+  }
+  .about-StakeWise .single-item h5 {
+    margin-top: 30px;
+  }
+  .amazing-features .single-slide .slide-content h5 {
+    margin-top: 25px;
+  }
+  .amazing-features::after {
+    background-image: unset;
+  }
+  .banner-section .overlay .banner-content .container .content-shape,
+  .banner-section .overlay .shape-area {
+    display: none;
+  }
+  .how-it-works .main-content {
+    padding: 35px 0 60px;
+  }
+  .betpopmodal .modal .modal-dialog .modal-content .modal-body .mid-area {
+    display: grid;
+  }
+  .betpopmodal
+    .modal
+    .modal-dialog
+    .modal-content
+    .modal-body
+    .mid-area
+    .quick-amounts {
+    padding: 20px 0;
+  }
+  .betpopmodal .modal .modal-dialog .modal-content .modal-body .bottom-area {
+    display: grid;
+    .btn-area {
+      margin: 20px 0;
+      button {
+        padding: 15px 10px;
+      }
+    }
+  }
+  .features-section .single-area .img-area img {
+    width: 35%;
+  }
+  .how-it-works.affiliates .single-area .img-area img {
+    width: 25%;
+  }
+  .how-it-works.affiliates::before {
+    height: 90%;
+  }
+  .currency-bet-section .table-responsive .table {
+    width: 210%;
+  }
+  .betting-details .main-content .table-responsive .table {
+    width: 170%;
+  }
+  .betting-details .main-content .escrow-bet-single {
+    display: grid;
+    padding: 20px;
+  }
+  .betting-details .main-content .escrow-bet-single .left-area {
+    margin: 0;
+    margin-bottom: 20px;
+  }
+  .betting-details .main-content .escrow-bet-single .right-area {
+    width: 100%;
+    padding: 20px;
+  }
+  .escrow-bets-fee .cus-mar {
+    margin-bottom: -30px;
+  }
+  .escrow-bets-fee .single-item {
+    margin-bottom: 30px;
+  }
+  .create-future-currency .main-content {
+    padding: 50px 30px;
+  }
+  .create-future-currency .main-content .invite-friends {
+    padding: 30px 20px;
+  }
+  .create-future-currency .main-content .single-input .nice-select {
+    width: 30%;
+  }
+  .create-future-currency
+    .main-content
+    .single-input
+    .input-items
+    input:last-child {
+    width: 60%;
+  }
+  .faqs-section.faqs-page ul {
+    padding-bottom: 0;
+    justify-content: center;
+    li {
+      margin-bottom: 10px;
+    }
+  }
+  .tournaments-section .table-responsive .table {
+    width: 120%;
+  }
+  .dashboard-content .dashboard-heading ul {
+    justify-content: flex-start;
+  }
+  .dashboard-content .tab-content .affiliate-tab .table-responsive .table {
+    width: 180%;
+  }
+  .dashboard-content .transactions-tab form {
+    flex-wrap: wrap;
+    .single-input {
+      margin-bottom: 20px;
+    }
+    .text-end {
+      margin-bottom: 10px;
+    }
+  }
+  .dashboard-content .tab-content .file-upload .file .file-custom {
+    width: 65%;
+  }
+  .dashboard-content .google-authentication .footer-area {
+    display: inline-grid;
+    h6 {
+      margin-bottom: 20px;
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  h1,
+  h1 > a {
+    font-size: 40px;
+    line-height: 46px;
+    margin-top: -9px;
+  }
+  h2,
+  h2 > a {
+    font-size: 30px;
+    line-height: 36px;
+    margin-top: -7px;
+  }
+  h3,
+  h3 > a {
+    font-size: 24px;
+    line-height: 28px;
+    margin-top: -6px;
+  }
+  h4,
+  h4 > a {
+    font-size: 18px;
+    line-height: 22px;
+    margin-top: -4px;
+  }
+  a,
+  p,
+  span,
+  li,
+  .cmn-btn,
+  thead tr th,
+  tbody tr th,
+  tbody tr td,
+  input,
+  label,
+  textarea,
+  h6,
+  h6 > a {
+    font-size: 15px;
+    line-height: 19px;
+  }
+  .section-header {
+    margin-top: -5px;
+    margin-bottom: 30px;
+  }
+  .title {
+    margin-bottom: 15px;
+  }
+  .xxlr {
+    font-size: 18px;
+    line-height: 25.5px;
+  }
+  .xlr {
+    font-size: 16px;
+    line-height: 22.4px;
+  }
+  .header-section .navbar {
+    padding: 20px 15px;
+  }
+  .banner-section .overlay .banner-content {
+    padding: 170px 0 180px;
+  }
+  .banner-section.inner-banner .overlay .banner-content {
+    padding: 170px 0 65px;
+  }
+  .banner-section.inner-banner.soccer-bets .overlay .banner-content {
+    padding: 170px 0 210px;
+  }
+  .banner-section.inner-banner.soccer-bets.currency-bet
+    .overlay
+    .banner-content {
+    padding: 170px 0 190px;
+  }
+  .banner-section.inner-banner.soccer-bets.currency-bet.escrow-bets-banner
+    .overlay
+    .banner-content {
+    padding: 170px 0 70px;
+  }
+  .banner-section.inner-banner.tournaments .overlay .banner-content {
+    padding: 170px 0 140px;
+  }
+  .banner-section.inner-banner.contact .overlay .banner-content {
+    padding: 170px 0 210px;
+  }
+  .faqs-section .accordion .accordion-item .accordion-button {
+    padding-left: 20px;
+  }
+  .faqs-section .accordion .accordion-item .accordion-header::after {
+    display: none;
+  }
+  .betpopmodal .modal .modal-dialog .modal-content .modal-body .top-item {
+    display: grid;
+    .draw {
+      margin: 20px 0;
+    }
+  }
+  .betpopmodal .modal .modal-dialog .modal-content .modal-body .select-odds {
+    padding: 15px;
+    .in-dec-val {
+      width: 40%;
+    }
+  }
+  .features-section .single-area .img-area img {
+    width: 20%;
+  }
+  .how-it-works.affiliates .magnific-area .mfp-iframe::before {
+    width: 120px;
+    height: 120px;
+  }
+  .how-it-works.affiliates .magnific-area .mfp-iframe {
+    height: 60px;
+    width: 60px;
+  }
+  .how-it-works.affiliates .single-area h4 {
+    margin-top: 10px;
+  }
+  .features-section .single-area h5 {
+    margin-top: 10px;
+  }
+  .testimonails-section .slick-slide .single-content {
+    padding: 30px 20px;
+  }
+  .tournaments-section .single-item {
+    .left-item {
+      display: grid;
+    }
+    .mid-area {
+      margin-top: 30px;
+      margin-left: 0;
+    }
+    .last-item {
+      padding: 40px 70px;
+    }
+  }
+  .blog-section
+    .sidebar-blog
+    .sidebar-single
+    .sidebar-carousel
+    .single-slide
+    img {
+    width: 100%;
+  }
+  .blog-section .blog-post .bottom-item {
+    display: grid !important;
+  }
+  .blog-section .blog-post .bottom-item .social-link {
+    margin-top: 30px;
+    a {
+      margin: 0;
+      margin-right: 20px;
+    }
+  }
+  .dashboard-content {
+    margin-top: 38px;
+  }
+  .dashboard-content .tab-content .file-upload .file .file-custom {
+    width: 70%;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-section .menu-item {
+    display: grid;
+    justify-content: center;
+    text-align: center;
+    ul {
+      margin-top: 20px;
+    }
+  }
+  .bet-this-game .single-area .main-content {
+    margin: 50px 0 40px;
+  }
+  .bet-this-game .single-area .main-content .team-single .img-area {
+    width: 65%;
+  }
+  .bet-this-game .single-area .main-content .mid-area .countdown {
+    padding: 6px 3px;
+  }
+  .bet-this-game .single-area .bottom-item {
+    border-top: 1px solid #8e78c0;
+    display: grid;
+    justify-content: center;
+  }
+  .bet-this-game .single-area .bottom-item .cmn-btn {
+    margin-bottom: 15px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .bet-this-game .single-area .head-area {
+    display: grid !important;
+    .cmn-btn {
+      width: 50%;
+    }
+    p {
+      margin: 20px 0 0;
+    }
+  }
+  .footer-section .newsletter {
+    padding: 60px 15px;
+  }
+  .pagination .page-item .page-link {
+    width: 30px;
+    height: 30px;
+  }
+  .pagination .page-item .page-btn {
+    width: 50px;
+    height: 30px;
+  }
+  .pagination .page-item .page-btn.previous,
+  .pagination .page-item .page-btn.next {
+    margin: 0;
+  }
+  .currency-bet-section .table-responsive .table {
+    width: 255%;
+  }
+  .betting-details .main-content {
+    padding: 0 15px 30px;
+  }
+  .betting-details .main-content .table-responsive .table {
+    width: 245%;
+  }
+  .create-future-currency .main-content .invite-friends .single-btn {
+    display: inline-grid;
+    .clear {
+      margin-top: 15px;
+    }
+  }
+  .create-future-currency .main-content .single-input .input-items {
+    display: grid !important;
+    input:first-child,
+    input:last-child {
+      width: 100%;
+      border-radius: 10px;
+    }
+  }
+  .create-future-currency .main-content .single-input .nice-select {
+    width: 70%;
+  }
+  .tournaments-section .single-item .last-item {
+    padding: 30px;
+  }
+  .tournaments-section ul.nav {
+    padding: 0 10px;
+    padding-top: 10px;
+    padding-bottom: -10px;
+    justify-content: center;
+    li {
+      margin-bottom: 10px;
+    }
+  }
+  .tournaments-section .single-item .mid-area ul li {
+    margin-right: 0;
+  }
+  .tournaments-section .table-responsive .table {
+    width: 170%;
+  }
+  .blog-section .single-blog .blog-content {
+    padding: 20px 15px;
+  }
+  .blog-section
+    .sidebar-blog
+    .sidebar-single
+    .sidebar-carousel
+    .single-slide
+    .slide-bottom {
+    display: grid !important;
+    .icon-area {
+      margin-top: 15px;
+    }
+  }
+  .blog-section .sidebar-blog .sidebar-single .title {
+    margin-bottom: 10px;
+  }
+  .blog-section .sidebar-blog .sidebar-single .sidebar-carousel .slick-arrow {
+    display: none !important;
+  }
+  .blog-section .blog-post {
+    padding: 30px 15px;
+  }
+  .log-reg .modal-content .tab-content .login-reg-content .counter-area {
+    display: grid;
+    padding-top: 15px;
+    .single {
+      margin-top: 15px;
+    }
+  }
+  .dashboard-content .bets-tab ul {
+    padding-bottom: 0;
+    justify-content: center;
+    li {
+      margin-bottom: 10px;
+    }
+  }
+  .dashboard-content .tab-content .table-responsive .table {
+    width: 190%;
+  }
+  .dashboard-content .deposit-with-tab .right-area .address-bar {
+    padding: 20px 10px;
+  }
+  .dashboard-content .deposit-with-tab .right-area {
+    padding: 20px 10px;
+  }
+  .dashboard-content .buy-crypto .col-6 {
+    width: 100% !important;
+  }
+  .dashboard-content .google-authentication .brand {
+    display: grid !important;
+    margin-top: 10px;
+    a {
+      margin-top: 10px;
+    }
+  }
+  .dashboard-content .tab-content .file-upload {
+    display: grid;
+    .img-area {
+      margin-bottom: 20px;
+    }
+  }
+
+  .dashboard-content .setting-tab .single-area {
+    display: grid;
+    a.mdr {
+      margin-left: 0;
+    }
+    p {
+      margin: 15px 0;
+    }
+    a.cmn-btn {
+      margin-top: 15px;
+    }
+  }
+  .dashboard-content .setting-tab .single-area .switch {
+    margin-left: 0;
+  }
+  .dashboard-content .google-authentication {
+    padding: 20px 10px;
+  }
+  .dashboard-content .tab-content .file-upload .file .file-custom {
+    width: 75%;
+  }
+  .dashboard-content .affiliate-tab .table-area {
+    padding: 20px 10px;
+  }
+  .dashboard-content .buy-crypto .form-box {
+    padding: 20px 10px;
+  }
+  .dashboard-content .buy-crypto {
+    padding: 20px 10px;
+  }
+  .dashboard-content .tab-content .buy-crypto .table-responsive .table {
+    width: 245%;
+  }
+  .dashboard-content .affiliate-tab .referral-bar {
+    padding: 20px 10px;
+  }
+  .dashboard-content .affiliate-tab {
+    padding: 20px 10px;
+  }
+  .dashboard-content .tab-content .affiliate-tab .table-responsive .table {
+    width: 260%;
+  }
+  .contact-section .bg-area {
+    padding: 50px 20px;
+  }
+  .header-section.user-dashboard
+    .navbar-collapse
+    .right-area
+    .single-item.notifications-area
+    .main-area,
+  .header-section.user-dashboard
+    .navbar-collapse
+    .right-area
+    .single-item
+    .main-area {
+    width: 290px;
+    padding: 20px 10px;
+  }
+  .header-section.user-dashboard
+    .navbar-collapse
+    .right-area
+    .single-item
+    .main-area
+    ul
+    li
+    a {
+    padding: 15px 0;
+  }
+}
+
+@media (max-width: 375px) {
+  .leave-comments .col-6,
+  .about-StakeWise .col-6 {
+    width: 100% !important;
+  }
+  .banner-section.inner-banner
+    .banner-content
+    .main-content
+    .breadcrumb-area
+    .breadcrumb
+    .breadcrumb-item
+    + .breadcrumb-item::before {
+    padding: 0 12px;
+  }
+  .breadcrumb-item + .breadcrumb-item {
+    padding-left: 9px;
+  }
+  .bet-this-game .single-area .main-content {
+    display: grid;
+    justify-content: center;
+  }
+  .bet-this-game .single-area .main-content .mid-area {
+    padding: 30px 0;
+  }
+  .bet-this-game .single-area .head-area {
+    .cmn-btn {
+      width: 60%;
+    }
+  }
+  .footer-section .newsletter form .form-group input {
+    padding-left: 0;
+  }
+  .footer-section .newsletter form .form-group button {
+    min-width: 40px;
+    min-height: 40px;
+  }
+  .how-it-works .main-content ul li h5 {
+    padding-left: 15px;
+  }
+  .how-it-works .main-content ul li h5 .image-area {
+    width: 20%;
+  }
+  .currency-bet-section .table-responsive .table {
+    width: 350%;
+  }
+  .blog-section {
+    .title {
+      margin: 30px 0 15px;
+    }
+    .author-blog-post {
+      display: grid !important;
+    }
+    .blog-post .author {
+      display: flex;
+      align-items: center;
+      .author-bottom {
+        display: flex;
+        .icon-area {
+          margin-left: 20px;
+        }
+      }
+    }
+  }
+  .log-reg .modal-content .tab-content .login-reg-content .remember-me {
+    display: grid;
+    .checkbox-single .left-area {
+      margin-bottom: 25px;
+    }
+  }
+  .log-reg .modal-content .log-reg-btn {
+    margin-bottom: -10px;
+    li {
+      margin-bottom: 20px;
+    }
+  }
+
+  .dashboard-content .tab-content .file-upload .file .file-custom {
+    width: 91%;
+  }
+}

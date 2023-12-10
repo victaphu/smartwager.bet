@@ -1,0 +1,27 @@
+{
+  "name": "stakewise-contracts",
+  "version": "1.0.0",
+  "description": "At Smart Stake Wagers, we're revolutionizing sports betting. By integrating NFTs with blockchain technology, we offer a secure, transparent, and uniquely thrilling betting experience. Are you ready to place your bet?",
+  "main": "index.js",
+  "scripts": {
+    "compile": "npx hardhat compile && cp -R artifacts/contracts/* ../sw-frontend/abi",
+    "test": "npx hardhat test",
+    "build:ganache": "docker build -t ganache .",
+    "start:ganache": "docker run --name sw-ganache -d -p 8545:8545 ganache",
+    "stop:ganache": "docker stop sw-ganache && docker container remove sw-ganache",
+    "deploy:mumbai": "",
+    "deploy:sepolia": ""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@chainlink/contracts": "^0.8.0",
+    "@chainlink/contracts-ccip": "^0.7.6",
+    "@chainlink/env-enc": "^1.0.5",
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.2",
+    "@openzeppelin/contracts": "^5.0.0",
+    "dotenv": "^16.3.1",
+    "hardhat": "^2.19.1"
+  }
+}

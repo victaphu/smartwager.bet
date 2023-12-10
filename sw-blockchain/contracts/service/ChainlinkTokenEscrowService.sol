@@ -11,6 +11,7 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "../tokens/ClaimNote721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./StakeWiseWhitelistNFT.sol";
+import {CCIPSecurityAwareReceiver} from "../iface/CCIPSecurityAwareReceiver.sol";
 
 /**
  * @title ChainlinkTokenEscrowService
@@ -20,9 +21,12 @@ import "./StakeWiseWhitelistNFT.sol";
  * with sufficient ETH before they transfer an ERC721 token into the contract or it will
  * be rejected. Fee estimates can be obtained using the get fees functions
  *
+ * note : added security aware receiver but didn't include the modifiers; need to
+ * think how we can make sure the contract sending/receiving is secure (and done in scalable way)
+ *
  * @author Victa
  */
-contract ChainlinkTokenEscrowService is CCIPReceiver, IERC721Receiver, Ownable {
+contract ChainlinkTokenEscrowService is CCIPSecurityAwareReceiver, IERC721Receiver {
     
     // Enum to specify the fee payment method
     enum PayFeesIn {
@@ -40,7 +44,7 @@ contract ChainlinkTokenEscrowService is CCIPReceiver, IERC721Receiver, Ownable {
 
     // Structure to define the Chainlink Token Escrow Service (CTES) message format
     struct CTESMessage {
-        uint64 sourceChainSelector;
+        uint64 targetChainSelector; // this is destination we want to send to
         PayFeesIn payFeesIn;
     }
 
@@ -54,6 +58,9 @@ contract ChainlinkTokenEscrowService is CCIPReceiver, IERC721Receiver, Ownable {
     // Mapping to track deposited Ether by user
     mapping(address => uint256) public depositedEth;
 
+    // mapping between a chain and its corresponding CTES deployed service
+    mapping(uint64 => address) public ctesMapping;
+
     /**
      * @notice Constructor to initialize the ChainlinkTokenEscrowService contract
      * @param router The address of the Chainlink CCIP router
@@ -66,7 +73,7 @@ contract ChainlinkTokenEscrowService is CCIPReceiver, IERC721Receiver, Ownable {
         address link,
         address claimNote,
         address whitelist
-    ) CCIPReceiver(router) Ownable(msg.sender) {
+    ) CCIPReceiver(router) {
         i_link = link;
         claim_note = claimNote;
         // Approve the router contract to spend LINK tokens
@@ -82,12 +89,26 @@ contract ChainlinkTokenEscrowService is CCIPReceiver, IERC721Receiver, Ownable {
     }
 
     /**
+     * @notice Update the CTES Mapping. This is used internally to route between the various
+     * CTES deployments on various chains. If its not in this mapping we will reject the message
+     *
+     * @param chainSelector the chain id as per chainlink
+     * @param remoteAddress the target receiver of the CCIP message
+     */
+    function updateCTESMapping(uint64 chainSelector, address remoteAddress) external onlyOwner() {
+        ctesMapping[chainSelector] = remoteAddress;
+    }
+
+    /**
      * @notice Internal function to process CCIP messages
      * @param any2EvmMessage The CCIP message received
      */
     function _ccipReceive(
         Client.Any2EVMMessage memory any2EvmMessage
     ) internal override {
+        s_lastReceivedMessageId = any2EvmMessage.messageId; // fetch the messageId
+        s_lastReceivedText = any2EvmMessage.data; // abi-decoding of the sent text
+
         uint64 selector = any2EvmMessage.sourceChainSelector;
         TokenMessage memory message = abi.decode(
             any2EvmMessage.data,
@@ -127,9 +148,11 @@ contract ChainlinkTokenEscrowService is CCIPReceiver, IERC721Receiver, Ownable {
         CTESMessage memory ctesMessage,
         bool isClaim
     ) public view returns (Client.EVM2AnyMessage memory) {
+        require(ctesMapping[ctesMessage.targetChainSelector] != address(0), 'Target chain selector unknown');
+        
         // encoded message is a redemption if the nft is a claim note
         Client.EVM2AnyMessage memory message = Client.EVM2AnyMessage({
-            receiver: abi.encode(from),
+            receiver: abi.encode(ctesMapping[ctesMessage.targetChainSelector]),
             data: abi.encode(
                 TokenMessage(operator, tokenId, from, isClaim)
             ),
@@ -168,7 +191,7 @@ contract ChainlinkTokenEscrowService is CCIPReceiver, IERC721Receiver, Ownable {
         );
 
         uint256 fee = IRouterClient(i_router).getFee(
-            ctesMessage.sourceChainSelector,
+            ctesMessage.targetChainSelector,
             message
         );
 
@@ -197,15 +220,15 @@ contract ChainlinkTokenEscrowService is CCIPReceiver, IERC721Receiver, Ownable {
 
     /**
      * @notice Public function to encode a CTESMessage
-     * @param sourceChainSelector The selector for the source chain
+     * @param targetChainSelector The selector for the source chain. where i want to send this message
      * @param fees The fee payment method
      * @return A byte array representing the encoded CTESMessage
      */
     function getEncoded(
-        uint64 sourceChainSelector,
+        uint64 targetChainSelector,
         PayFeesIn fees
     ) public pure returns (bytes memory) {
-        return abi.encode(CTESMessage(sourceChainSelector, fees));
+        return abi.encode(CTESMessage(targetChainSelector, fees));
     }
 
     /**
@@ -251,7 +274,7 @@ contract ChainlinkTokenEscrowService is CCIPReceiver, IERC721Receiver, Ownable {
         );
         CTESMessage memory ctesMessage = abi.decode(data, (CTESMessage));
         message = getChainlinkMessage(operator, from, tokenId, ctesMessage, false);
-        chain = ctesMessage.sourceChainSelector;
+        chain = ctesMessage.targetChainSelector;
     }
 
     /**

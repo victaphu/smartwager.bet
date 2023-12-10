@@ -44,6 +44,9 @@ describe("ChainlinkTokenEscrowService", function () {
     await whitelist.addWhitelistContract(await sample721.getAddress());
 
     await whitelist.addWhitelistContract(await claimNote721.getAddress());
+
+
+    await escrowService.updateCTESMapping(123, owner.address);
   });
 
   it("should receive and process an ERC721 token", async function () {

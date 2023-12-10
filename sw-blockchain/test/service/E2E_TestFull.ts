@@ -118,6 +118,10 @@ describe("E2E_TestFull", function () {
     await wagerService.setForwarder(forwarder.address);
     await stakeWiseRandom.transferOwnership(await wagerService.getAddress());
 
+    await escrowService_1.updateCTESMapping(123, await escrowService_2.getAddress());
+    await escrowService_2.updateCTESMapping(123, await escrowService_1.getAddress());
+
+    await escrowService_2.updateCTESMapping(1, await escrowService_1.getAddress());
   });
 
   it("an end-to-end test from minting to bridge, to wager back to original chain to redeem", async function () {
@@ -169,7 +173,6 @@ describe("E2E_TestFull", function () {
       .withArgs(gameData.eventId, user1.address);
 
     expect(await swnft.ownerOf(1)).eq(user1.address);
-
     const swnftAddress = await swnft.getAddress();
     await claimNote721_2.connect(user1)['safeTransferFrom(address,address,uint256,bytes)'](user1.address, swnftAddress, 0, ethers.AbiCoder.defaultAbiCoder().encode(["uint256", "uint256"], [gameId, 1]));
     await claimNote721_2.connect(user2)['safeTransferFrom(address,address,uint256,bytes)'](user2.address, swnftAddress, 1, ethers.AbiCoder.defaultAbiCoder().encode(["uint256", "uint256"], [gameId, 2]));
@@ -223,8 +226,12 @@ describe("E2E_TestFull", function () {
     const fees2 = await escrowService_2.getFeeEstimate(await sample721.getAddress(), sender, 1, encoded);    
     await (await user2.sendTransaction({ to: await escrowService_2.getAddress(), value: BigInt("200000000000000000") })).wait();
 
-    await claimNote721_2.connect(user2).safeTransferFrom(user2.address, await escrowService_2.getAddress(), 0);
-    await claimNote721_2.connect(user2).safeTransferFrom(user2.address, await escrowService_2.getAddress(), 1);
+    // await claimNote721_2.connect(user2).safeTransferFrom(user2.address, await escrowService_2.getAddress(), 0);
+    // await claimNote721_2.connect(user2).safeTransferFrom(user2.address, await escrowService_2.getAddress(), 1);
+
+    await claimNote721_2.connect(user2)['safeTransferFrom(address,address,uint256,bytes)'](user2.address, await escrowService_2.getAddress(), 0, ethers.AbiCoder.defaultAbiCoder().encode(["uint256", "uint256"], [gameId, 1]));
+    await claimNote721_2.connect(user2)['safeTransferFrom(address,address,uint256,bytes)'](user2.address, await escrowService_2.getAddress(), 1, ethers.AbiCoder.defaultAbiCoder().encode(["uint256", "uint256"], [gameId, 2]));
+
 
     // confirm that the token is now in user2 
     expect(await  sample721.balanceOf(user2.address)).eq(2);

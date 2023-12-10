@@ -62,6 +62,9 @@ describe("E2E_ChainlinkTokenEscrowService", function () {
     await whitelist.addWhitelistContract(await sample721.getAddress());
     await whitelist.addWhitelistContract(await claimNote721_1.getAddress());
     await whitelist.addWhitelistContract(await claimNote721_2.getAddress());
+
+    await escrowService_1.updateCTESMapping(123, await escrowService_2.getAddress());
+    await escrowService_2.updateCTESMapping(1, await escrowService_1.getAddress());
   });
 
   it("should allow e2e transfer between simulated escrow services and redemption of note", async function () {
@@ -104,7 +107,6 @@ describe("E2E_ChainlinkTokenEscrowService", function () {
 
     expect(await claimNote721_2.balanceOf(sender)).eq(0);
     expect(await sample721.balanceOf(await escrowService_1.getAddress())).eq(0);
-    
     // Transfer the ERC721 token to the escrowService
     await sample721['safeTransferFrom(address,address,uint256,bytes)'](sender, await escrowService_1.getAddress(), tokenId, encoded);
 
@@ -115,7 +117,7 @@ describe("E2E_ChainlinkTokenEscrowService", function () {
     // confirm there is a claimable note on the destination chain
     expect(await claimNote721_2.balanceOf(sender)).eq(1);
     expect(await claimNote721_1.balanceOf(sender)).eq(0);
-    
+
     // lets now transfer back to the escrowService_2
     // just need to do safe transfer
     const tx2 = await owner.sendTransaction({

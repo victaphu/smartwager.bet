@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 format(new Date(), 'yyyy/MM/dd kk:mm:ss')
 const GameCard = ({ itm }) => {
   const { home, away, division, home_icon, away_icon } = itm;
-  const date = new Date(Number(itm?.eventDate * 1000));
+  const date = new Date(Number(itm?.eventDate) * 1000);
   return (
     // <div className="col-lg-6">
     <div className="single-area">

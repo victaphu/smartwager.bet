@@ -93,7 +93,7 @@ const BetpopUpModal = () => {
                     </div>
                     <div style={{"display": "flex", "flexDirection": "column", "maxHeight": "500px", "overflowY": "scroll"}}>
                     {games.map((game, i) => {
-                      return (<div style={{"padding": "20px", "backgroundColor" : i%2 ? "blue": "navy"}}>
+                      return (<div style={{"padding": "20px", "backgroundColor" : i%2 ? "blue": "navy"}} key={i}>
                         <h4>Game {game.gameId}</h4>
                         <div className="main-content" style={{ "display": "flex" }}>
                           <div className="team-single" style={{"flexGrow": "1"}}>

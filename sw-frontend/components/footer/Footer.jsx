@@ -38,8 +38,8 @@ const Footer = () => {
                   {/* social start */}
                   <Social
                     items={[
-                      [FaGithub, "/"],
-                      [FaYoutube, "/"],
+                      [FaGithub, "https://github.com/victaphu/smartwager.bet"],
+                      [FaYoutube, "https://youtu.be/FTtOGKi1sdM"],
                       [FaLinkedinIn, "/"],
                     ]}
                   />

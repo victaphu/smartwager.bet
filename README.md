@@ -6,7 +6,7 @@ The SmartWager platform will automatically manage the wager, results, and disbur
 wager details and results. The dNFT is updated using Chainlink Automation and Chainlink VRF. Future automation will use real-world events.
 
 ## Transaction Records
-CCIP - https://ccip.chain.link/msg/0xb41ddce8ba20e2fd571c3c790401ef3b159aaf8c60a83e718c09b835db1819ae
+CCIP - https://ccip.chain.link/msg/0xbfbbf3dca0538be4bf0df3e1d7dbe7b66e3d5e800b786f78dd74a2d0c15ad822
 Chainlink Functions - 
 Chainlink VRF - 
 

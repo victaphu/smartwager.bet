@@ -58,15 +58,28 @@ async function setForwarder() {
   await instance.setForwarder(forwarder);
 }
 
+async function updateWhitelist() {
+  const whitelist = "0xa874c8CafeAFE8937a92bC261a8Fe53aeA53F6DF";
+  const instance = await ethers.getContractAt("StakeWiseWhitelistNFT", whitelist);
+  // await instance.setForwarder(forwarder);
+  await (await instance.addWhitelistContract("0xf93B7198085AFc5948C02176908Db0701a180594")).wait();
+  await (await instance.addWhitelistContract("0x6A1CB242421871361E7C87f08D1b17dfB176492e")).wait();
+}
+
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+// main().catch((error) => {
+//   console.error(error);
+//   process.exitCode = 1;
+// });
 
 // setForwarder().catch((e) => {
 //
   //  console.log(e);
 //   process.exitCode = 1;
 // })
+
+updateWhitelist().catch((e) => {
+  console.log(e);
+  process.exitCode = 1;
+})

@@ -3,11 +3,12 @@ import Select from "../select/Select";
 import { useEffect, useState } from "react";
 import { erc721ABI, useAccount, useContractRead, useContractWrite, usePrepareContractWrite } from "wagmi";
 import common from "../common/common";
+import { waitForTransaction } from "@wagmi/core";
 
 const WithdrawTab = () => {
   const { address } = useAccount();
   const [balances, setBalances] = useState({sample:0, claim: 0});
-
+  
   const { config, error } = usePrepareContractWrite({
     address: common.sampleNft,
     abi: [{
@@ -17,27 +18,27 @@ const WithdrawTab = () => {
       "stateMutability": "nonpayable",
       "type": "function"
     }],
-    chainId: 80001,
+    chainId: common.chain.sepolia,
     functionName: "mintToken"
   });
 
-  const { write, isLoading } = useContractWrite(config);
+  const { writeAsync, isLoading } = useContractWrite(config);
 
   // read - sepolia
   const sampleNFT = useContractRead({
-    chainId: 80001,
+    chainId: common.chain.sepolia,
     address: common.sampleNft,
     abi: erc721ABI,
-    args: [address],
+    args: [address || common.sampleNft],
     functionName: "balanceOf"
   });
 
   // read - polygon mumbai
   const claimNote = useContractRead({
-    chainId: 80001,
+    chainId: common.chain.mumbai,
     address: common.claimNote,
     abi: erc721ABI,
-    args: [address],
+    args: [address || common.claimNote],
     functionName: "balanceOf"
   });
 
@@ -86,7 +87,12 @@ const WithdrawTab = () => {
               <div className="address-bar">
                 <p>Actions</p>
                 <div className="input-area">
-                  <button type="button" className="cmn-btn firstTeam" onClick={() => write?.()} disabled={isLoading}>{isLoading ? "Minting Sample ERC721" : "Mint Sample ERC721"}</button>
+                  <button type="button" className="cmn-btn firstTeam" onClick={async () => {
+                    const res = await writeAsync?.();
+                    await waitForTransaction(res);
+                    sampleNFT.refetch()
+                    claimNote.refetch()
+                  }} disabled={isLoading}>{isLoading ? "Minting Sample ERC721" : "Mint Sample ERC721"}</button>
                   <button type="button" className="cmn-btn firstTeam" data-bs-toggle="modal" data-bs-target="#bridgenft">Withdraw Claim Note</button>
                 </div>
 

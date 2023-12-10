@@ -1,10 +1,5 @@
-import gameData, { useFetchGames } from "@/data/ganeData";
-import Link from "next/link";
+import { useFetchGames } from "@/data/ganeData";
 import GameCard from "../cards/GameCard";
-import { useEffect } from "react";
-import { readContract } from "@wagmi/core";
-import common from "../common/common";
-import Image from "next/image";
 
 const Bet = () => {
   const {data, read} = useFetchGames();

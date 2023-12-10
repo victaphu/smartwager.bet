@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { erc721ABI, useAccount, useContractRead, useContractWrite, usePrepareContractWrite } from "wagmi";
 import common from "../common/common";
+import { waitForTransaction } from "@wagmi/core";
 import BridgeTokenModal from "../modals/BridgeTokenModal";
 
 const DepositTab = () => {
@@ -16,32 +17,31 @@ const DepositTab = () => {
       "stateMutability": "nonpayable",
       "type": "function"
     }],
-    chainId: 80001,
+    chainId: common.chain.sepolia,
     functionName: "mintToken"
   });
 
-  const { write, isLoading } = useContractWrite(config);
+  const { writeAsync, isLoading } = useContractWrite(config);
 
   // read - sepolia
   const sampleNFT = useContractRead({
-    chainId: 80001,
+    chainId: common.chain.sepolia,
     address: common.sampleNft,
     abi: erc721ABI,
-    args: [address],
+    args: [address || common.sampleNft],
     functionName: "balanceOf"
   });
 
   // read - polygon mumbai
   const claimNote = useContractRead({
-    chainId: 80001,
+    chainId: common.chain.mumbai,
     address: common.claimNote,
     abi: erc721ABI,
-    args: [address],
+    args: [address || common.claimNote],
     functionName: "balanceOf"
   });
 
   useEffect(() => {
-    console.log(sampleNFT.data, claimNote.data);
     if (isNaN(Number(sampleNFT.data)) || isNaN(Number(claimNote.data))) {
       return;
     }
@@ -60,7 +60,7 @@ const DepositTab = () => {
       role="tabpanel"
       aria-labelledby="deposit-tab"
     >
-      <BridgeTokenModal chainSelector={common.chainSelector.mumbai} escrowAddress={common.sepolia.chainlinkTokenEscrowService} nftAddress={common.sampleNft} sourceChainId={11155111}/>
+      <BridgeTokenModal chainSelector={common.chainSelector.mumbai} escrowAddress={common.sepolia.chainlinkTokenEscrowService} nftAddress={common.sampleNft} sourceChainId={common.chain.sepolia}/>
       <div className="deposit-with-tab">
         <div className="row">
           <div className="col-xxl-4 col-xl-5">
@@ -86,7 +86,12 @@ const DepositTab = () => {
               <div className="address-bar">
                 <p>Actions</p>
                 <div className="input-area">
-                  <button type="button" className="cmn-btn firstTeam" onClick={() => write?.()} disabled={isLoading}>{isLoading ? "Minting Sample ERC721" : "Mint Sample ERC721"}</button>
+                  <button type="button" className="cmn-btn firstTeam" onClick={async () => {
+                    const res = await writeAsync?.();
+                    await waitForTransaction(res);
+                    sampleNFT.refetch()
+                    claimNote.refetch()
+                  }} disabled={isLoading}>{isLoading ? "Minting Sample ERC721" : "Mint Sample ERC721"}</button>
                   <button type="button" className="cmn-btn firstTeam" data-bs-toggle="modal" data-bs-target="#bridgenft">Bridge to StakeWise</button>
                 </div>
 

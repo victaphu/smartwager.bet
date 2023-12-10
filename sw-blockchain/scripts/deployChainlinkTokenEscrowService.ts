@@ -81,9 +81,31 @@ async function main() {
   console.log('Done');
 }
 
+// once deployed, we need to add the chain selector and chain escrow across various chains
+async function updateEscrow() {
+  const mumbaiSelector = "12532609583862916517";
+  const mumbaiEscrow = "0xB7C5A47449C179B8eD4f59082daa5E93F888Cb9f";
+  const sepoliaSelector = "16015286601757825753";
+  const sepoliaEscrow = "0x9692f4a851175a86Fa83caE65EAD7E9629c1caf1";
+
+  const addr = network.config.chainId === 80001 ? sepoliaEscrow : mumbaiEscrow;
+  const selector = network.config.chainId === 80001 ? sepoliaSelector : mumbaiSelector;
+
+  const instance = await ethers.getContractAt("ChainlinkTokenEscrowService", network.config.chainId === 80001 ? mumbaiEscrow : sepoliaEscrow);
+  const tx = await instance.updateCTESMapping(selector, addr);
+
+  console.log('ChainlinkTokenEscrowService -', addr, selector);
+  console.log(await tx.wait());
+}
+
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
-main().catch((error) => {
-  console.error(error);
+// main().catch((error) => {
+//   console.error(error);
+//   process.exitCode = 1;
+// });
+
+updateEscrow().catch((e) => {
+  console.error(e);
   process.exitCode = 1;
-});
+})

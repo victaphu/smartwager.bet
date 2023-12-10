@@ -24,7 +24,7 @@ const BridgeTokenModal = ({ chainSelector, escrowAddress, nftAddress, sourceChai
       "stateMutability": "nonpayable",
       "type": "function"
     }],
-    chainId: 80001,
+    chainId: common.chain.sepolia,
     functionName: "mintToken"
   });
 

@@ -1,14 +1,18 @@
 export default {
   wager: "0xF5037D7D3E5DF37c0521C4452EAB83a40d258Ed0",
-  sampleNft: "0xB0722A679Ed6790c6c810B3D1e9967f45Ef2a6A0",
-  claimNote: "0x2C8fBEf9f411CD6468fB2376Ad08Ca7AC86bC432",
+  sampleNft: "0x56C1423ea54faEC00a7633aAA2F8Bf4A958fA0d2",
+  claimNote: "0x6A1CB242421871361E7C87f08D1b17dfB176492e",
   sepolia: {
-    claimNote: "0x7DD026718C0b0c5d4876f394cD6f655C262dF531",
-    chainlinkTokenEscrowService: "0x9C1A28B6b1B14CB1f7CE756f99b99bf8318679Fd",
+    claimNote: "0x5879960452be1E1c41fDD0E1F51376DC17a42584",
+    chainlinkTokenEscrowService: "0x9692f4a851175a86Fa83caE65EAD7E9629c1caf1",
   },
   chainSelector: {
     mumbai: "12532609583862916517",
     sepolia: "16015286601757825753"
+  },
+  chain: {
+    mumbai: 80001,
+    sepolia: 11155111
   }
 };
 

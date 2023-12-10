@@ -144,13 +144,13 @@ export function useFetchGames() {
   
   async function read() {
     const data = [];
-    for (let i = 0; i < 15; ++i) {
+    for (let i = 10; i < 20; ++i) {
       const res = (await readContract({
         address: common.wager,
         abi: abi,
         functionName: "findGameById",
         args: [i + 1],
-        chainId: 80001
+        chainId: common.chain.mumbai
       }));
 
       const ev = new Date(Number(res.eventDate) * 1000);
@@ -170,7 +170,7 @@ export function useFetchGames() {
       data.push(res);
     }
 
-    setData(data);
+    setData(data.sort((a, b) => Number(a.eventDate) - Number(b.eventDate)));
   }
 
   useEffect(() => {    

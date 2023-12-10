@@ -5,6 +5,34 @@ import down_arrow from "/public/images/icon/down-arrow.png";
 import up_arrow from "/public/images/icon/up-arrow.png";
 import { format } from "date-fns";
 
+
+const img1 = "https://i.seadn.io/gcs/files/2c41369cdfb2323fe991443e0df7b930.png?auto=format&dpr=1&w=1000";
+const img2 = "https://i.seadn.io/gae/qw71kH-wuhbe9rz8r7zOEbDawJG8X28-MRqv5NIMjMZEq8js3ED6URNlq0hdF1WkUifWM-ohusyU279CgDJD-A7954btXfgHl4wNQA?auto=format&dpr=1&w=384"
+
+const _games = [
+  {
+    "gameId": 123,
+    "player1": true,
+    "player2": false
+  },
+  {
+    "gameId": 2423,
+    "player1": true,
+    "player2": false
+  },
+  {
+    "gameId": 342,
+    "player1": true,
+    "player2": true
+  },
+  {
+    "gameId": 443,
+    "player1": false,
+    "player2": true
+  },
+]
+
+
 const BetpopUpModal = () => {
   const [odd, setOdd] = useState(1.5);
   const [betValue, setBetValue] = useState(0.1);
@@ -13,9 +41,11 @@ const BetpopUpModal = () => {
   const [gameId, setGameId] = useState("");
   const [eventDate, setEventDate] = useState(0);
 
+  const [games, setGames] = useState(_games);
+
   useEffect(() => {
     const handler = (e) => {
-      console.log(e.relatedTarget.dataset); 
+      console.log(e.relatedTarget.dataset);
       setHome(e.relatedTarget.dataset.home);
       setAway(e.relatedTarget.dataset.away);
       setGameId(e.relatedTarget.dataset.id);
@@ -61,65 +91,26 @@ const BetpopUpModal = () => {
                         {away} will win
                       </button>
                     </div>
-                    <div className="select-odds d-flex align-items-center">
-                      <h6>Select Odds</h6>
-                      <div className="d-flex in-dec-val">
-                        <input
-                          type="text"
-                          value={odd}
-                          className="InDeVal2"
-                          onChange={(e) => setOdd(e.target.value)}
-                        />
-                        <div className="btn-area">
-                          <button className="plus2">
-                            <Image src={up_arrow} alt="icon" />
-                          </button>
-                          <button className="minus2">
-                            <Image src={down_arrow} alt="icon" />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="mid-area">
-                      <div className="single-area">
-                        <div className="d-flex in-dec-val">
-                          <input
-                            type="text"
-                            value={betValue}
-                            className="InDeVal1"
-                            onChange={(e) => setBetValue(e.target.value)}
-                          />
-                          <div className="btn-area">
-                            <button className="plus">
-                              <Image src={up_arrow} alt="icon" />
-                            </button>
-                            <button className="minus">
-                              <Image src={down_arrow} alt="icon" />
-                            </button>
+                    <div style={{"display": "flex", "flexDirection": "column", "maxHeight": "500px", "overflowY": "scroll"}}>
+                    {games.map((game, i) => {
+                      return (<div style={{"padding": "20px", "backgroundColor" : i%2 ? "blue": "navy"}}>
+                        <h4>Game {game.gameId}</h4>
+                        <div className="main-content" style={{ "display": "flex" }}>
+                          <div className="team-single" style={{"flexGrow": "1"}}>
+                            <span className="mdr">Home</span>
+                            <div className="img-area">
+                              <img src={game.player1 ? img1 : "https://s3.eu-central-1.amazonaws.com/join.marketing/uploads/2018/07/Nieuw-logo-blauw.png"} alt="image" style={{"width": "200px"}}/>
+                            </div>
+                          </div>
+                          <div className="team-single" style={{"flexGrow": "1"}}>
+                            <span className="mdr">Away</span>
+                            <div className="img-area" style={{"width": "200px"}}>
+                              <img src={game.player2 ? img2 : "https://s3.eu-central-1.amazonaws.com/join.marketing/uploads/2018/07/Nieuw-logo-blauw.png"} alt="image" />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="single-area quick-amounts">
-                        <div className="item-title d-flex align-items-center">
-                          <p>Quick Amounts</p>
-                        </div>
-                        <div className="input-item">
-                          <button className="quickIn">0.005</button>
-                          <button className="quickIn">0.025</button>
-                          <button className="quickIn">0.1</button>
-                          <button className="quickIn">0.5</button>
-                          <button className="quickIn">2.5</button>
-                        </div>
-                      </div>
-                      <div className="single-area smart-value">
-                        <div className="item-title d-flex align-items-center">
-                          <p className="mdr">Smart Contact Value</p>
-                        </div>
-                        <div className="contact-val d-flex align-items-center">
-                          <h4>0.1103</h4>
-                          <h5>ETH</h5>
-                        </div>
-                      </div>
+                      </div>)
+                    })}
                     </div>
                     <div className="bottom-area">
                       <div className="bottom-right">

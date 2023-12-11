@@ -18,14 +18,34 @@ Chainlink VRF -
 ### Staking NFTs
 ![staking nft](./images/ccip-lock-and-mint.png "CCIP Chainlink Token Escrow Service - Lock and Mint")
 
-- CCIP 
+Chainlink CCIP is the backbone of our NFT Token Escrow Service. We take advantage of the message transfer service to escrow NFTs between chains.  
+
+- Steve wants to bring his NFT into the Polygon network. He wants to use the NFT in liquidity and speculation events on a low-cost network
+- He transfers the NFT to the Chainlink Token Escrow  Service. A CCIP message is sent to the polygon network
+- On polygon side, a ClaimNote is minted. Holder of this note can burn it to redeem the original NFT
+- The ClaimNote is transferred automatically to Steve’s wallet on the Polygon Side   
+
 
 ### Claiming NFTs
 ![staking nft](./images/ccip-claim-and-unlock.png "CCIP Chainlink Token Escrow Service - Claim and Unlock")
+Once the NFT is in Steve’s wallet he can start using the Smart Wager Service.   
+
+- Steve sees a wager he likes and create a Wager Event (dNFT). He puts his claim note into the dNFT escrow. The wager event is published.  
+- Victa sees this and decides to bet against Steve. He transfers his NFT into the Wager Event. 
+- When the event completes, Chainlink Automation will wake up our smart contract who will then use Chainlink functions to retrieve the result of the wager. Both NFTs are automatically sent to Steve once we’ve confirmed that Steve is the winner. All in a trust-reduced environment.
 
 
 ### SmartWager Platform
 ![staking nft](./images/ca-cf-stakewise-bet.png "SmartWager Wager Platform Service")
+
+Steve now wants to claim the NFT he won. It turns out Victa also used the CTES to send his NFT to Stakewise. Steve now holds the NFT Claim Note to the penguin on the original chain.  
+
+- Steve calls claim on the note, burning it in the process
+- CTES creates a CCIP message and sends it to the originating chain (it has all this information when it first mints the Claim Note)
+- The redeem function is called and a message arrives on the originating chain.
+- The redeem request is received and the token is then removed from escrow
+- The NFT is finally sent to Steve who can now do anything with the NFT
+
 
 
 ## Setup

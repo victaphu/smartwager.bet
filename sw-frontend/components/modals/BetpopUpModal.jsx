@@ -1,8 +1,6 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Select from "../select/Select";
-import down_arrow from "/public/images/icon/down-arrow.png";
-import up_arrow from "/public/images/icon/up-arrow.png";
 import { format } from "date-fns";
 import { erc721ABI, useAccount, useContractRead } from "wagmi";
 import common, { stakeWiseWager } from "../common/common";
@@ -10,7 +8,6 @@ import { polygonMumbai } from "viem/chains";
 import { createPublicClient, decodeEventLog, http } from "viem";
 import { ethers } from "ethers";
 import { waitForTransaction, prepareWriteContract, writeContract } from "@wagmi/core";
-import { useFetchActiveGames } from "@/data/ganeData";
 import useFetchGameNFTs from "../hooks/useFetchGameNFTs";
 
 const img1 = "https://i.seadn.io/gcs/files/2c41369cdfb2323fe991443e0df7b930.png?auto=format&dpr=1&w=1000";
@@ -32,12 +29,53 @@ function getRandomImage() {
 
 const emptySlot = "images/join.png";
 
-function Card({game, i, home, away}) {
+async function joinGame(tokenId, gameId, selection, getListNFTs, fetchGames, address) {
+  console.log('joining game', gameId, 'wagering NFT', tokenId, 'expecting', selection);
+  const request2 = await prepareWriteContract({
+    address: common.claimNote,
+    abi: erc721ABI,
+    functionName: "safeTransferFrom",
+    args: [address, common.swnft, tokenId, ethers.AbiCoder.defaultAbiCoder().encode(["uint256", "uint256"], [gameId, selection])]
+  });
+
+  const receipt2 = await waitForTransaction(await writeContract(request2.request));
+  console.log('NFT Transfer was successful!', receipt2);
+  getListNFTs();
+  fetchGames();
+}
+
+function Card({ game, i, home, away, nfts, getListNFTs, fetchGames }) {
+  const { address } = useAccount();
+  const [tokenId, setTokenId] = useState(nfts.length > 0 ? nfts[0].id : -1);
   const homeImage = game.p1Position === BigInt(1) || game.p2Position === BigInt(1) ? getRandomImage() : emptySlot;
   const awayImage = game.p1Position === BigInt(2) || game.p2Position === BigInt(2) ? getRandomImage() : emptySlot;
-  
+
   const homePlayer = game.p1Position === BigInt(1) ? game.player1 : game.p2Position === BigInt(1) ? game.player2 : undefined;
   const awayPlayer = game.p1Position === BigInt(2) ? game.player1 : game.p2Position === BigInt(2) ? game.player2 : undefined;
+
+  const [loading, setLoading] = useState(false);
+
+  async function join(selection) {
+    if (!confirm(`Are you sure you want to join ${selection === 1 ? home : away} team and wager NFT ${tokenId}?`)) {
+      return;
+    }
+    setLoading(true);
+    try {
+      if (selection === 1) {
+        if (homePlayer) return;
+
+        await joinGame(tokenId, game.id, selection, getListNFTs, fetchGames, address)
+      }
+      else {
+        if (awayPlayer) return;
+        await joinGame(tokenId, game.id, selection, getListNFTs, fetchGames, address)
+      }
+    }
+    finally {
+      setLoading(false);
+    }
+
+  }
 
   return (<div style={{ "padding": "20px", "backgroundColor": i % 2 ? "blue" : "navy" }} key={i}>
     <h4>Game dNFT {game.id}</h4>
@@ -45,16 +83,24 @@ function Card({game, i, home, away}) {
       <div className="team-single">
         <span className="mdr">Home</span>
         <div className="img-area text-center" style={{ "width": "200px" }}>
-          <img onClick={() => !game.player1 && updateGame(game.gameId, true)} src={homeImage} alt="image" />
-          {!homePlayer ? <button className="btn btn-primary">{home} to win</button> : <p style={{fontSize: "12px"}}>{homePlayer}</p>}
+          <img onClick={() => join(1)} src={homeImage} alt="image" />
+          {!homePlayer && !loading ? <button onClick={() => join(1)} className="btn btn-primary">{home} to win</button> : <p style={{ fontSize: "12px" }}>{homePlayer}</p>}
+          {loading && <div><div className="spinner-border text-primary" role="status">
+            <span className="sr-only "></span>
+          </div></div>}
         </div>
       </div>
-
+      <div>
+        <p>Select Nft to wager</p>
+        {nfts.length > 0 && <Select data={nfts} onChange={(e) => setTokenId(e.id)} />}</div>
       <div className="team-single">
         <span className="mdr">Away</span>
         <div className="img-area text-center" style={{ "width": "200px" }}>
-          <img onClick={() => !game.player2 && updateGame(game.gameId, false)} src={awayImage} alt="image" />
-          {!awayPlayer ? <button className="btn btn-primary">{away} to win</button> : <p style={{fontSize: "12px"}}>{awayPlayer}</p>}
+          <img onClick={() => join(2)} src={awayImage} alt="image" />
+          {!awayPlayer && !loading ? <button onClick={() => join(2)} className="btn btn-primary">{away} to win</button> : <p style={{ fontSize: "12px" }}>{awayPlayer}</p>}
+          {loading && <div><div className="spinner-border text-primary" role="status">
+            <span className="sr-only "></span>
+          </div></div>}
         </div>
       </div>
     </div>
@@ -96,7 +142,7 @@ const BetpopUpModal = () => {
     });
 
     const offset = 0;
-    
+
     for (let i = 0; i < Number(total) && balance > 0; ++i) {
       try {
         const owner = await client.readContract({
@@ -276,7 +322,7 @@ const BetpopUpModal = () => {
 
                     <div style={{ "display": "flex", "flexDirection": "column", "maxHeight": "500px", "overflowY": "scroll" }}>
                       {activeGames.map((game, i) => {
-                        return (<Card i={i} game={game} home={home} away={away} key={i}/>)
+                        return (<Card i={i} game={game} home={home} away={away} key={i} nfts={nfts} fetchGames={fetchGames} getListNFTs={getListNFTs} />)
                       })}
                       {activeGames.length === 0 && <h4>No active NFTs</h4>}
                     </div>

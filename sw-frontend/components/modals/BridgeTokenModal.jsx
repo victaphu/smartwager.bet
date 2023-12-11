@@ -93,7 +93,7 @@ const BridgeTokenModal = () => {
         await switchNetworkAsync(sourceChainId)
         console.log('network switched');
       }
-      
+
       const client = createPublicClient({
         chain: sepolia.id === +sourceChainId ? sepolia : polygonMumbai,
         transport: http()

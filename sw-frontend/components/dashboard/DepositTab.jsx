@@ -3,25 +3,12 @@ import { erc721ABI, useAccount, useContractRead, useContractWrite, usePrepareCon
 import common from "../common/common";
 import { waitForTransaction } from "@wagmi/core";
 import BridgeTokenModal from "../modals/BridgeTokenModal";
+import useMintSample from "../hooks/useMintSampleNFT";
 
 const DepositTab = () => {
   const { address } = useAccount();
   const [balances, setBalances] = useState({ sample: 0, claim: 0 });
-
-  const { config, error } = usePrepareContractWrite({
-    address: common.sampleNft,
-    abi: [{
-      "inputs": [],
-      "name": "mintToken",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    }],
-    chainId: common.chain.sepolia,
-    functionName: "mintToken"
-  });
-
-  const { writeAsync, isLoading } = useContractWrite(config);
+  const { checkNetworkAndMint, isLoading } = useMintSample();
 
   // read - sepolia
   const sampleNFT = useContractRead({
@@ -85,12 +72,11 @@ const DepositTab = () => {
               <div className="address-bar">
                 <p>Actions</p>
                 <div className="input-area">
-                  <button type="button" className="cmn-btn firstTeam" onClick={async () => {
-                    const res = await writeAsync?.();
-                    await waitForTransaction(res);
+                  <button type="button" className="cmn-btn firstTeam" disabled={isLoading} onClick={async () => {
+                    await checkNetworkAndMint();
                     sampleNFT.refetch()
                     claimNote.refetch()
-                  }} disabled={isLoading}>{isLoading ? "Minting Sample ERC721" : "Mint Sample ERC721"}</button>
+                  }}>{isLoading ? "Minting Sample NFT ..." : "Mint Sample ERC721"}</button>
                   <button type="button" className="cmn-btn firstTeam" data-bs-toggle="modal" data-bs-target="#bridgenft"
                     data-chainselector={common.chainSelector.mumbai} data-escrowaddress={common.sepolia.chainlinkTokenEscrowService} data-nftaddress={common.sampleNft} data-sourcechainid={common.chain.sepolia}>Bridge to StakeWise</button>
                 </div>

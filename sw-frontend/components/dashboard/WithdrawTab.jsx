@@ -4,26 +4,12 @@ import { useEffect, useState } from "react";
 import { erc721ABI, useAccount, useContractRead, useContractWrite, usePrepareContractWrite } from "wagmi";
 import common from "../common/common";
 import { waitForTransaction } from "@wagmi/core";
+import useMintSample from "../hooks/useMintSampleNFT";
 
 const WithdrawTab = () => {
   const { address } = useAccount();
-  const [balances, setBalances] = useState({sample:0, claim: 0});
-  
-  const { config, error } = usePrepareContractWrite({
-    address: common.sampleNft,
-    abi: [{
-      "inputs": [],
-      "name": "mintToken",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    }],
-    chainId: common.chain.sepolia,
-    functionName: "mintToken"
-  });
-
-  const { writeAsync, isLoading } = useContractWrite(config);
-
+  const [balances, setBalances] = useState({ sample: 0, claim: 0 });
+  const { checkNetworkAndMint, isLoading } = useMintSample();
   // read - sepolia
   const sampleNFT = useContractRead({
     chainId: common.chain.sepolia,
@@ -63,7 +49,7 @@ const WithdrawTab = () => {
       aria-labelledby="withdraw-tab"
     >
       <div className="deposit-with-tab withdraw">
-      <div className="row">
+        <div className="row">
           <div className="col-xxl-4 col-xl-5">
             <div className="balance-area">
               <div className="head-area d-flex align-items-center justify-content-between">
@@ -88,17 +74,16 @@ const WithdrawTab = () => {
                 <p>Actions</p>
                 <div className="input-area">
                   <button type="button" className="cmn-btn firstTeam" onClick={async () => {
-                    const res = await writeAsync?.();
-                    await waitForTransaction(res);
+                    await checkNetworkAndMint();
                     sampleNFT.refetch()
                     claimNote.refetch()
-                  }} disabled={isLoading}>{isLoading ? "Minting Sample ERC721" : "Mint Sample ERC721"}</button>
+                  }}>{isLoading ? "Minting Sample NFT ..." : "Mint Sample ERC72"}</button>
                   <button type="button" className="cmn-btn firstTeam" data-bs-toggle="modal" data-bs-target="#bridgenft"
                     data-chainselector={common.chainSelector.sepolia} data-escrowaddress={common.mumbai.chainlinkTokenEscrowService} data-nftaddress={common.claimNote} data-sourcechainid={common.chain.mumbai}>Withdraw Claim Note</button>
                 </div>
 
                 <p>Faucets</p>
-                <div className="input-area" style={{textAlign: 'center'}}>
+                <div className="input-area" style={{ textAlign: 'center' }}>
                   <button type="button" className="cmn-btn firstTeam" onClick={() => window.open('https://faucet.polygon.technology/')}>Get more Matic</button>
                   <button type="button" className="cmn-btn firstTeam" onClick={() => window.open('https://sepoliafaucet.com/')}>Get more Sepolia</button>
                 </div>
@@ -114,7 +99,7 @@ const WithdrawTab = () => {
                   <h6>Notice :</h6>
                   <p>
                     When withdrawing Claim Notes, the claim is burnt and sent via CCIP to the source NFT chain. The token is then deposited into your wallet in
-                    the source chain. 
+                    the source chain.
                   </p>
                 </div>
               </div>

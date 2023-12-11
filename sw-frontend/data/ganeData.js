@@ -140,9 +140,11 @@ const abi = [{
 }];
 
 export function useFetchGames() {
-  const [data, setData] = useState([]);  
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
   
   async function read() {
+    setLoading(true);
     const data = [];
     for (let i = 10; i < 30; ++i) {
       const res = (await readContract({
@@ -171,13 +173,14 @@ export function useFetchGames() {
     }
 
     setData(data.sort((a, b) => Number(a.eventDate) - Number(b.eventDate)));
+    setLoading(false);
   }
 
   useEffect(() => {    
     read();
   }, []);
 
-  return {data, read};
+  return {data, read, loading};
 }
 
 export function useFetchActiveGames() {

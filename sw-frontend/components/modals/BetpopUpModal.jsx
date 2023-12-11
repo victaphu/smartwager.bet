@@ -90,7 +90,7 @@ function Card({ game, i, home, away, nfts, getListNFTs, fetchGames }) {
           </div></div>}
         </div>
       </div>
-      <div className="col-lg-2 col-md-12" style={{'padding-top': "16px"}}>
+      <div className="col-lg-2 col-md-12" style={{ 'padding-top': "16px" }}>
         <p>Select Nft to wager</p>
         {nfts.length > 0 && <Select data={nfts} onChange={(e) => setTokenId(e.id)} />}</div>
       <div className="team-single col-lg-4 col-md-12">
@@ -122,7 +122,7 @@ const BetpopUpModal = () => {
   const [showCreate, setShowCreate] = useState(false);
   const { address } = useAccount();
 
-  const { fetchGames, games, } = useFetchGameNFTs();
+  const { fetchGames, games, isLoading } = useFetchGameNFTs();
 
   const getListNFTs = async () => {
     const client = createPublicClient({
@@ -319,12 +319,18 @@ const BetpopUpModal = () => {
                         <p>Processing Wager!</p>
                       </div>}
 
+                      {isLoading && <div className="row justify-content-center"><div className="spinner-border text-primary col-lg-12" role="status">
+                        <span className="sr-only "></span>
+                      </div>
+                      <div className="col-lg-12 text-center" style={{paddingTop: "16px"}}><h4>Loading Active Game NFTs</h4></div>
+                      </div>}
 
                     <div style={{ "display": "flex", "flexDirection": "column", "maxHeight": "500px", "overflowY": "scroll" }}>
-                      {activeGames.map((game, i) => {
+                      {!isLoading && activeGames.map((game, i) => {
                         return (<Card i={i} game={game} home={home} away={away} key={i} nfts={nfts} fetchGames={fetchGames} getListNFTs={getListNFTs} />)
                       })}
-                      {activeGames.length === 0 && <h4>No active NFTs</h4>}
+                      
+                      {activeGames.length === 0 && !isLoading && <h4>No active NFTs</h4>}
                     </div>
                     <div className="bottom-area">
                       <div className="bottom-right">

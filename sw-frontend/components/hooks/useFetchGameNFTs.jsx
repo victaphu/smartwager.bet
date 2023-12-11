@@ -92,30 +92,37 @@ export default function useFetchGameNFTs() {
   const [isLoading, setLoading] = useState(false);
   const [games, setGames] = useState([]);
   async function fetchGames() {
-    const client = createPublicClient({
-      chain: polygonMumbai,
-      transport: http()
-    });
+    setLoading(true);
 
-    const totalNFTs = await client.readContract({
-      address: common.swnft,
-      abi: swnftAbi,
-      functionName: "counter"
-    });
-    console.log(totalNFTs);
-    const games = [];
-    for (let i = 0; i < totalNFTs; ++i) {
-      const game = await client.readContract({
+    try {
+      const client = createPublicClient({
+        chain: polygonMumbai,
+        transport: http()
+      });
+
+      const totalNFTs = await client.readContract({
         address: common.swnft,
         abi: swnftAbi,
-        functionName: "getResult",
-        args: [i + 1]
+        functionName: "counter"
       });
-      game.id = i + 1;
-      console.log(game);
-      games.push(game);
+      console.log(totalNFTs);
+      const games = [];
+      for (let i = 0; i < totalNFTs; ++i) {
+        const game = await client.readContract({
+          address: common.swnft,
+          abi: swnftAbi,
+          functionName: "getResult",
+          args: [i + 1]
+        });
+        game.id = i + 1;
+        console.log(game);
+        games.push(game);
+      }
+      setGames(games);
     }
-    setGames(games);
+    finally {
+      setLoading(false);
+    }
   }
   return { fetchGames, games, isLoading };
 }

@@ -2,7 +2,7 @@ import { useFetchGames } from "@/data/ganeData";
 import GameCard from "../cards/GameCard";
 
 const Bet = () => {
-  const {data, read} = useFetchGames();
+  const { data, read, loading } = useFetchGames();
 
   return (
     <section className="bet-this-game">
@@ -25,6 +25,11 @@ const Bet = () => {
                 <GameCard itm={itm} />
               </div>
             ))}
+            {loading && <div className="row justify-content-center"><div className="spinner-border text-primary col-lg-12" role="status">
+              <span className="sr-only "></span>
+            </div>
+            <div className="col-lg-12 text-center" style={{"paddingTop": "12px"}}><h4>Loading Active Games</h4></div>
+            </div>}
           </div>
           {/* <div className="row">
             <div className="col-lg-12 d-flex justify-content-center">

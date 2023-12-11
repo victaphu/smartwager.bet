@@ -22,73 +22,80 @@ const BridgeTokenModal = () => {
   const [explorerLink, setExplorerLink] = useState('');
   const { chain } = useNetwork();
   const { switchNetworkAsync } = useSwitchNetwork();
+  const [refreshing, setRefreshing] = useState(false);
 
   const { checkNetworkAndMint, isLoading } = useMintSample();
 
   const getListNFTs = async () => {
-    const client = createPublicClient({
-      chain: sepolia.id === +sourceChainId ? sepolia : polygonMumbai,
-      transport: http()
-    });
+    setRefreshing(true);
+    try {
+      const client = createPublicClient({
+        chain: sepolia.id === +sourceChainId ? sepolia : polygonMumbai,
+        transport: http()
+      });
 
-    const nfts = [];
+      const nfts = [];
 
-    const total = 100;
+      const total = 100;
 
-    const balance = await client.readContract({
-      address: nftAddress,
-      abi: erc721ABI,
-      functionName: "balanceOf",
-      args: [address || common.sampleNft]
-    });
+      const balance = await client.readContract({
+        address: nftAddress,
+        abi: erc721ABI,
+        functionName: "balanceOf",
+        args: [address || common.sampleNft]
+      });
 
-    const offset = nftAddress === common.claimNote || nftAddress === common.sepolia.claimNote ? 0 : 1;
+      const offset = nftAddress === common.claimNote || nftAddress === common.sepolia.claimNote ? 0 : 1;
 
-    for (let i = 0; i < Number(total) && balance > 0; ++i) {
-      try {
-        const owner = await client.readContract({
-          address: nftAddress,
-          abi: erc721ABI,
-          functionName: "ownerOf",
-          args: [i + offset]
-        });
+      for (let i = 0; i < Number(total) && balance > 0; ++i) {
+        try {
+          const owner = await client.readContract({
+            address: nftAddress,
+            abi: erc721ABI,
+            functionName: "ownerOf",
+            args: [i + offset]
+          });
 
-        if (owner === ethers.ZeroAddress) {
-          console.log("NFT rejected")
+          if (owner === ethers.ZeroAddress) {
+            console.log("NFT rejected")
+            break;
+          }
+
+          if (owner === address) {
+            nfts.push({ id: i + offset, name: "NFT " + i });
+          }
+
+          if (balance === nfts.length) {
+            break; // break if we found all the nfts
+          }
+        }
+        catch (e) {
+          console.log(e);
+          if (balance > nfts.length) {
+            continue;
+          }
           break;
         }
-
-        if (owner === address) {
-          nfts.push({ id: i + offset, name: "NFT " + i });
-        }
-
-        if (balance === nfts.length) {
-          break; // break if we found all the nfts
-        }
       }
-      catch (e) {
-        console.log(e);
-        if (balance > nfts.length) {
-          continue;
-        }
-        break;
+
+      setNFTs(nfts);
+      console.log(nfts);
+      if (nfts.length > 0) {
+        setTokenId(nfts[0].id);
       }
-    }
 
-    setNFTs(nfts);
-    console.log(nfts);
-    if (nfts.length > 0) {
-      setTokenId(nfts[0].id);
+      return nfts;
     }
-
-    return nfts;
+    finally {
+      setRefreshing(false);
+    }
   }
 
   const startCCIP = async () => {
     isSending(true)
     console.log(tokenId);
     try {
-      
+
       if (chain.id != sourceChainId) {
         await switchNetworkAsync(sourceChainId)
         console.log('network switched');
@@ -210,14 +217,18 @@ const BridgeTokenModal = () => {
                       <h4>Bridge Token between Escrow Services</h4>
                     </div>
                     <div className="select-odds align-items-center">
-                      {nfts.length > 0 && <h6>Select NFT to Bridge</h6>}
-                      {nfts.length > 0 && <Select data={nfts} onChange={(e) => setTokenId(e.id)} />}
-                      {nfts.length == 0 && <div>
+                      {nfts.length > 0 && !refreshing && <h6>Select NFT to Bridge</h6>}
+                      {nfts.length > 0 && !refreshing && <Select data={nfts} onChange={(e) => setTokenId(e.id)} />}
+                      {nfts.length === 0 && !refreshing && <div>
                         <p>You do not have any NFTs, why not claim a free NFT and try us out?</p>
                         <button onClick={async (e) => {
                           const res = await checkNetworkAndMint();
                           getListNFTs();
                         }} className="mdr cmn-btn" disabled={isLoading}>{isLoading ? "Claiming NFT ..." : "Claim a free NFT!"}</button>
+                      </div>}
+                      {refreshing && <div><div className="spinner-border text-primary" role="status">
+                        <span className="sr-only "></span>
+                      </div>
                       </div>}
                     </div>
                     <div className="mid-area">

@@ -6,7 +6,10 @@ The SmartWager platform will automatically manage the wager, results, and disbur
 wager details and results. The dNFT is updated using Chainlink Automation and Chainlink VRF. Future automation will use real-world events.
 
 ## Transaction Records
-CCIP - https://ccip.chain.link/msg/0xbfbbf3dca0538be4bf0df3e1d7dbe7b66e3d5e800b786f78dd74a2d0c15ad822
+CCIP - 
+https://ccip.chain.link/msg/0xbfbbf3dca0538be4bf0df3e1d7dbe7b66e3d5e800b786f78dd74a2d0c15ad822 - After token mint, send it from Sepolia to Mumbai  
+https://ccip.chain.link/msg/0x8189d017cab27b3a414421faf1266811a0b472e20dcc09d02dcabb72ac4ba659 - Claim Note is burnt on Mumbai and NFT reclaimed on Sepolia side  
+
 Chainlink Functions - 
 Chainlink VRF - 
 
@@ -17,7 +20,6 @@ Chainlink VRF -
 
 - CCIP 
 
-
 ### Claiming NFTs
 ![staking nft](./images/ccip-claim-and-unlock.png "CCIP Chainlink Token Escrow Service - Claim and Unlock")
 
@@ -27,5 +29,27 @@ Chainlink VRF -
 
 
 ## Setup
-- npx hardhat compile
+
+### Setup Blockchain
+- cd sw-blockchain
+- npm install
+- npm run compile
 - npx hardhat test
+- npx hardhat run --network polygon_mumbai scripts/deployChainlinkTokenEscrowService.ts
+- npx hardhat run --network sepolia scripts/deployChainlinkTokenEscrowService.ts
+
+In the output, find the whitelist address and replace the whitelist inside deployStakeWiseInfrastructure.ts with the whitelist (shared whitelist)  
+
+- npx hardhat run --network polygon_mumbai scripts/deployStakeWiseInfrastructure.ts
+
+Seed it with some wagers  
+
+- npx hardhat run --network polygon_mumbai scripts/operations/addAdditionalWagers.ts 
+
+
+### Setup Frontend
+- cd sw-frontend
+- Edit .env file and add the wallet connect key
+- npm install
+- Edit the components/common/common.jsx with the newly deployed smart contracts above
+- npm run dev

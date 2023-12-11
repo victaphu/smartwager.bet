@@ -12,6 +12,9 @@ wager details and results. The dNFT is updated using Chainlink Automation and Ch
 - https://ccip.chain.link/msg/0x8189d017cab27b3a414421faf1266811a0b472e20dcc09d02dcabb72ac4ba659 - Claim Note is burnt on Mumbai and NFT reclaimed on Sepolia side  
 
 
+Here are a list of test CCIP messages which we've been sending:  
+https://ccip.chain.link/address/0x9692f4a851175a86fa83cae65ead7e9629c1caf1
+
 **Chainlink Functions** -   
  (ID 24285257907087691622817243027000637480036284087421225229913691001399631052684)
 https://mumbai.polygonscan.com/tx/0xb9e618730dc075c8f2f518f783d80d1e3ebfb1d77bc52590a6da35093674d66c - Upkeep was performed when a wager result needed to be evaluated  

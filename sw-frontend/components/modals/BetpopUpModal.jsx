@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Select from "../select/Select";
 import { format } from "date-fns";
-import { erc721ABI, useAccount, useContractRead } from "wagmi";
+import { erc721ABI, useAccount, useContractRead, useNetwork, useSwitchNetwork } from "wagmi";
 import common, { stakeWiseWager } from "../common/common";
 import { polygonMumbai } from "viem/chains";
 import { createPublicClient, decodeEventLog, http } from "viem";
@@ -52,7 +52,6 @@ function Card({ game, i, home, away, nfts, getListNFTs, fetchGames }) {
 
   const homePlayer = game.p1Position === BigInt(1) ? game.player1 : game.p2Position === BigInt(1) ? game.player2 : undefined;
   const awayPlayer = game.p1Position === BigInt(2) ? game.player1 : game.p2Position === BigInt(2) ? game.player2 : undefined;
-
   const [loading, setLoading] = useState(false);
 
   async function join(selection) {
@@ -118,10 +117,10 @@ const BetpopUpModal = () => {
   const [nfts, setNfts] = useState([]);
   const [tokenId, setTokenId] = useState(0);
   const [loading, setLoading] = useState(false);
-
   const [showCreate, setShowCreate] = useState(false);
   const { address } = useAccount();
-
+  const { chain } = useNetwork();
+  const { switchNetworkAsync } = useSwitchNetwork();
   const { fetchGames, games, isLoading } = useFetchGameNFTs();
 
   const getListNFTs = async () => {
@@ -184,14 +183,20 @@ const BetpopUpModal = () => {
   }
 
   useEffect(() => {
-    getListNFTs();
     const handler = (e) => {
+      getListNFTs();
       console.log(e.relatedTarget.dataset);
       setHome(e.relatedTarget.dataset.home);
       setAway(e.relatedTarget.dataset.away);
       setGameId(e.relatedTarget.dataset.id);
       setEventDate(+e.relatedTarget.dataset.eventdate);
 
+      console.log(chain?.id, common.chain.mumbai);
+      if (chain?.id != common.chain.mumbai) {
+        console.log(switchNetworkAsync);
+        switchNetworkAsync(common.chain.mumbai);
+      }
+      
       fetchGames();
     };
     document.getElementById('betpop-up').addEventListener('show.bs.modal', handler);
@@ -199,7 +204,7 @@ const BetpopUpModal = () => {
     return () => {
       document.getElementById('betpop-up').removeEventListener('show.bs.modal', handler);
     }
-  }, []);
+  }, [switchNetworkAsync]);
 
   async function confirmWager(selection) {
 

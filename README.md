@@ -1,4 +1,5 @@
 # SmartWager.Bet - Chainlink Constellation Hackathon (2023)
+![staking nft](./images/logo.png "Smart Wager - Bet with Assets, Win with Asssurance")  
 Stake your NFT, choose your wager and use the staked NFT as collateral.  
 SmartWager allow you to bridge your NFTs onto the SmartWager platform, mint clamnotes and use these notes to wager against various events.  
 
@@ -87,3 +88,19 @@ Seed it with some wagers
 
 # Learn More  
 Watch the video here https://www.youtube.com/watch?v=FTtOGKi1sdM
+
+# Future Improvements and Next Steps
+We're on the lookout for partners in Australia to take this to market. With some betting agencies already in mind, we're tapping into a huge potential. 🚀
+
+Next steps:  
+- **Build Out the Tech 🛠**: Ironing out the kinks.
+- **Market Fit 🎲**: Experiment with different chains and find the sweet spot for our product.
+- **Tokenomics 💰**: If we can nail the tokenomics and product market fit then the platform can run automatically forever (Chainlink products can be automatically funded)
+- **Join Us! 👋**: Keen to learn more or help speed things up? Reach out here or find me on LinkedIn (search for Victa Phu).
+
+Technical Improvements:
+- Use TheGraph or an API to retrieve front-end data. This should greatly improve the scalability and responsiveness of the app  
+- Make better use of the Chainlink Protocols (esp CCIP to optimise the costs). We want to explore multi-plexing the requests to allow users to transfer a batch of tokens in one CCIP message  
+- Complete the UI components (claiming, cancelling) and allowing more than the ClaimToken as the wager NFT (e.g. enable various verified polygon NFTs to be used as wagers)
+- Deploy this on other NFT-rich Blockchains so we can start to bridge these NFTs over to Polygon for wagering options
+- Security audit of the smart contracts

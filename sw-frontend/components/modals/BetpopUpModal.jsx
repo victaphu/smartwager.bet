@@ -7,7 +7,7 @@ import { format } from "date-fns";
 import { erc721ABI, useAccount, useContractRead } from "wagmi";
 import common, { stakeWiseWager } from "../common/common";
 import { polygonMumbai } from "viem/chains";
-import { createPublicClient, http } from "viem";
+import { createPublicClient, decodeEventLog, http } from "viem";
 import { ethers } from "ethers";
 import { waitForTransaction, prepareWriteContract, writeContract } from "@wagmi/core";
 
@@ -173,16 +173,27 @@ const BetpopUpModal = () => {
       // create game
       const receipt = await waitForTransaction(await writeContract(request.request));
       console.log('Game Created successfully', receipt);
-      
+
+      const logs = receipt.logs.map(l => {
+        try {
+          return decodeEventLog({...l, abi: erc721ABI})
+        } catch (e) {
+          return {};
+        }
+      }).find(e=>e.eventName === 'Transfer');
+      console.log(logs);
 
       // transfer NFT
       // await sampleERC721.connect(player1)['safeTransferFrom(address,address,uint256,bytes)'](player1.address, swnftAddress, 1, ethers.AbiCoder.defaultAbiCoder().encode(["uint256", "uint256"], [gameId, 1]));
 
+      // gameId should be replaced with NFT ID, which is the newly minted NFT
+      // we get this probably from the Transfer event
+      console.log(receipt.logs);
       const request2 = await prepareWriteContract({
         address: common.claimNote,
         abi: erc721ABI,
         functionName: "safeTransferFrom",
-        args: [address, common.swnft, tokenId, ethers.AbiCoder.defaultAbiCoder().encode(["uint256", "uint256"], [gameId, selection])]
+        args: [address, common.swnft, tokenId, ethers.AbiCoder.defaultAbiCoder().encode(["uint256", "uint256"], [logs?.args?.tokenId || 0, selection])]
       });
 
       const receipt2 = await waitForTransaction(await writeContract(request.request));

@@ -47,7 +47,6 @@ Steve now wants to claim the NFT he won. It turns out Victa also used the CTES t
 - The NFT is finally sent to Steve who can now do anything with the NFT
 
 
-
 ## Setup
 
 ### Setup Blockchain
@@ -73,3 +72,7 @@ Seed it with some wagers
 - npm install
 - Edit the components/common/common.jsx with the newly deployed smart contracts above
 - npm run dev
+
+
+# Learn More  
+Watch the video here https://www.youtube.com/watch?v=FTtOGKi1sdM

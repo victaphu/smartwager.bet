@@ -59,3 +59,20 @@ Transferring Ownership Permissions
 
 
 Forwarder Address: 0x5f8a904D34eda5a1a6Fe7953F8C0f53b0586BcA6  
+
+## Installation
+- npm install
+- npm run compile
+- npx hardhat test
+- npx hardhat run --network polygon_mumbai scripts/deployChainlinkTokenEscrowService.ts
+- npx hardhat run --network sepolia scripts/deployChainlinkTokenEscrowService.ts
+
+In the output, find the whitelist address and replace the whitelist inside deployStakeWiseInfrastructure.ts with the whitelist (shared whitelist)  
+
+- npx hardhat run --network polygon_mumbai scripts/deployStakeWiseInfrastructure.ts
+
+Seed it with some wagers  
+
+- npx hardhat run --network polygon_mumbai scripts/operations/addAdditionalWagers.ts 
+
+See the root folder readme file for more information

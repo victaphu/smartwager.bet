@@ -6,5 +6,9 @@ The Stakewise platform will automatically manage the wager, results, and disburs
 wager details and results. The dNFT is updated using Chainlink Automation and Chainlink VRF. Future automation will use real-world events.
 
 ## Setup
-- npx hardhat compile
-- npx hardhat test
+- npm install
+- Update components/common/common.jsx with the configuration for the various smart contracts deployed
+- Create a .env file that has the wallet connect project id
+- npm run dev
+
+See the root folder readme file for more information

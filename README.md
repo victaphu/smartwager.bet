@@ -1,9 +1,9 @@
 # SmartWager.Bet - Chainlink Constellation Hackathon (2023)
-![staking nft](./images/logo.png "Smart Wager - Bet with Assets, Win with Asssurance")  
+![staking nft](./images/logo.png "Smart Wager - Bet with Assets, Win with Assurance")  
 Stake your NFT, choose your wager and use the staked NFT as collateral.  
-SmartWager allow you to bridge your NFTs onto the SmartWager platform, mint clamnotes and use these notes to wager against various events.  
+SmartWager allows you to bridge your NFTs onto the SmartWager platform, mint claim notes and use these notes to wager against various events.  
 
-The SmartWager platform will automatically manage the wager, results, and disbursement. Each wager is represented as a dNFT holding the 
+The SmartWager platform will automatically manage the wager, results, and disbursement. Each wager is represented by a dNFT, which holds the 
 wager details and results. The dNFT is updated using Chainlink Automation and Chainlink VRF. Future automation will use real-world events.
 
 ## Transaction Records

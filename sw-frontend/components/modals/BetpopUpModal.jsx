@@ -79,8 +79,8 @@ function Card({ game, i, home, away, nfts, getListNFTs, fetchGames }) {
 
   return (<div style={{ "padding": "20px", "backgroundColor": i % 2 ? "blue" : "navy" }} key={i}>
     <h4>Game dNFT {game.id}</h4>
-    <div className="main-content top-item">
-      <div className="team-single">
+    <div className="main-content top-item row">
+      <div className="team-single col-lg-4 col-md-12">
         <span className="mdr">Home</span>
         <div className="img-area text-center" style={{ "width": "200px" }}>
           <img onClick={() => join(1)} src={homeImage} alt="image" />
@@ -90,10 +90,10 @@ function Card({ game, i, home, away, nfts, getListNFTs, fetchGames }) {
           </div></div>}
         </div>
       </div>
-      <div>
+      <div className="col-lg-2 col-md-12" style={{'padding-top': "16px"}}>
         <p>Select Nft to wager</p>
         {nfts.length > 0 && <Select data={nfts} onChange={(e) => setTokenId(e.id)} />}</div>
-      <div className="team-single">
+      <div className="team-single col-lg-4 col-md-12">
         <span className="mdr">Away</span>
         <div className="img-area text-center" style={{ "width": "200px" }}>
           <img onClick={() => join(2)} src={awayImage} alt="image" />

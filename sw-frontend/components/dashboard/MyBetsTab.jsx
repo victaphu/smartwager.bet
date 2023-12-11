@@ -32,15 +32,15 @@ function Card({ game, i }) {
 
   return (<div style={{ "padding": "20px", "backgroundColor": i % 2 ? "blue" : "navy" }} key={i}>
     <h4>Game dNFT {game.id}</h4>
-    <div className="main-content top-item">
-      <div className="team-single">
+    <div className="main-content top-item row">
+      <div className="team-single col-lg-6">
         <span className="mdr">Home</span>
         <div className="img-area text-center" style={{ "width": "200px" }}>
           <img src={homeImage} alt="image" />
           {!homePlayer ? <div className="btn btn-primary">Awaiting Wager</div> : <p style={{ fontSize: "12px" }}>{homePlayer}</p>}
         </div>
       </div>
-      <div className="team-single">
+      <div className="team-single col-lg-6">
         <span className="mdr">Away</span>
         <div className="img-area text-center" style={{ "width": "200px" }}>
           <img src={awayImage} alt="image" />
@@ -130,8 +130,9 @@ const MyBetsTab = () => {
                   role="tabpanel"
                   aria-labelledby="canceled-tab"
                 >
-                  <div style={{ "display": "flex", "flexDirection": "column", "maxHeight": "500px", "overflowY": "scroll" }}></div>
-                  {games.filter(g => g.started === 2 && (g.player1 === address || g.player2 === address)).map((game, i) => <Card i={i} game={game} key={i} />)}
+                  <div style={{ "display": "flex", "flexDirection": "column", "maxHeight": "500px", "overflowY": "scroll" }}>
+                    {games.filter(g => g.started === 2 && (g.player1 === address || g.player2 === address)).map((game, i) => <Card i={i} game={game} key={i} />)}
+                  </div>
                 </div>
               </div>
               <div

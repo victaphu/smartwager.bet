@@ -36,8 +36,8 @@ function Card({game, i, home, away}) {
   const homeImage = game.p1Position === BigInt(1) || game.p2Position === BigInt(1) ? getRandomImage() : emptySlot;
   const awayImage = game.p1Position === BigInt(2) || game.p2Position === BigInt(2) ? getRandomImage() : emptySlot;
   
-  const homePlayer = game.p1Position === BigInt(1) ? game.p1Player : game.p2Position === BigInt(1) ? game.p2Player : undefined;
-  const awayPlayer = game.p1Position === BigInt(2) ? game.p1Player : game.p2Position === BigInt(2) ? game.p2Player : undefined;
+  const homePlayer = game.p1Position === BigInt(1) ? game.player1 : game.p2Position === BigInt(1) ? game.player2 : undefined;
+  const awayPlayer = game.p1Position === BigInt(2) ? game.player1 : game.p2Position === BigInt(2) ? game.player2 : undefined;
 
   return (<div style={{ "padding": "20px", "backgroundColor": i % 2 ? "blue" : "navy" }} key={i}>
     <h4>Game dNFT {game.id}</h4>
@@ -46,7 +46,7 @@ function Card({game, i, home, away}) {
         <span className="mdr">Home</span>
         <div className="img-area text-center" style={{ "width": "200px" }}>
           <img onClick={() => !game.player1 && updateGame(game.gameId, true)} src={homeImage} alt="image" />
-          {!homePlayer ? <button className="btn btn-primary">{home} to win</button> : homePlayer}
+          {!homePlayer ? <button className="btn btn-primary">{home} to win</button> : <p style={{fontSize: "12px"}}>{homePlayer}</p>}
         </div>
       </div>
 
@@ -54,7 +54,7 @@ function Card({game, i, home, away}) {
         <span className="mdr">Away</span>
         <div className="img-area text-center" style={{ "width": "200px" }}>
           <img onClick={() => !game.player2 && updateGame(game.gameId, false)} src={awayImage} alt="image" />
-          {!awayPlayer ? <button className="btn btn-primary">{away} to win</button> : awayPlayer}
+          {!awayPlayer ? <button className="btn btn-primary">{away} to win</button> : <p style={{fontSize: "12px"}}>{awayPlayer}</p>}
         </div>
       </div>
     </div>
@@ -96,7 +96,7 @@ const BetpopUpModal = () => {
     });
 
     const offset = 0;
-
+    
     for (let i = 0; i < Number(total) && balance > 0; ++i) {
       try {
         const owner = await client.readContract({
@@ -121,6 +121,9 @@ const BetpopUpModal = () => {
       }
       catch (e) {
         console.log(e);
+        if (balance > nfts.length) {
+          continue;
+        }
         break;
       }
     }
@@ -132,20 +135,6 @@ const BetpopUpModal = () => {
     }
 
     return nfts;
-  }
-
-  const updateGame = (gameId, p1) => {
-    const game = games.find(e => e.gameId === gameId);
-
-    if (p1 && !game.player1) {
-      game.p1 = mapping[(idx++) & mapping.length];
-      game.player1 = true;
-    }
-    if (!p1 && !game.player2) {
-      game.p2 = mapping[(idx++) & mapping.length];
-      game.player2 = true;
-    }
-    setGames([...games]);
   }
 
   useEffect(() => {
@@ -209,8 +198,10 @@ const BetpopUpModal = () => {
         args: [address, common.swnft, tokenId, ethers.AbiCoder.defaultAbiCoder().encode(["uint256", "uint256"], [logs?.args?.tokenId || 0, selection])]
       });
 
-      const receipt2 = await waitForTransaction(await writeContract(request.request));
+      const receipt2 = await waitForTransaction(await writeContract(request2.request));
       console.log('NFT Transfer was successful!', receipt2);
+      getListNFTs();
+      fetchGames();
     }
     catch (e) {
       console.log('error', e);
@@ -285,7 +276,7 @@ const BetpopUpModal = () => {
 
                     <div style={{ "display": "flex", "flexDirection": "column", "maxHeight": "500px", "overflowY": "scroll" }}>
                       {activeGames.map((game, i) => {
-                        return (<Card i={i} game={game} home={home} away={away}/>)
+                        return (<Card i={i} game={game} home={home} away={away} key={i}/>)
                       })}
                       {activeGames.length === 0 && <h4>No active NFTs</h4>}
                     </div>

@@ -45,6 +45,7 @@ async function joinGame(tokenId, gameId, selection, getListNFTs, fetchGames, add
 }
 
 function Card({ game, i, home, away, nfts, getListNFTs, fetchGames }) {
+
   const { address } = useAccount();
   const [tokenId, setTokenId] = useState(nfts.length > 0 ? nfts[0].id : -1);
   const homeImage = game.p1Position === BigInt(1) || game.p2Position === BigInt(1) ? getRandomImage() : emptySlot;
@@ -54,7 +55,18 @@ function Card({ game, i, home, away, nfts, getListNFTs, fetchGames }) {
   const awayPlayer = game.p1Position === BigInt(2) ? game.player1 : game.p2Position === BigInt(2) ? game.player2 : undefined;
   const [loading, setLoading] = useState(false);
 
+  let homeNFT = "", awayNFT = "";
+
+  if (homePlayer) {
+    homeNFT = Number(game.p1Position === BigInt(1) ? game.p1TokenId : game.p2TokenId);
+  }
+  if (awayPlayer) {
+    awayNFT = Number(game.p1Position === BigInt(2) ? game.p1TokenId : game.p2TokenId);
+  }
   async function join(selection) {
+    if (homePlayer && selection === 1 || awayPlayer && selection === 2) {
+      return; // no need to click
+    }
     if (!confirm(`Are you sure you want to join ${selection === 1 ? home : away} team and wager NFT ${tokenId}?`)) {
       return;
     }
@@ -83,20 +95,20 @@ function Card({ game, i, home, away, nfts, getListNFTs, fetchGames }) {
         <span className="mdr">Home</span>
         <div className="img-area text-center" style={{ "width": "200px" }}>
           <img onClick={() => join(1)} src={homeImage} alt="image" />
-          {!homePlayer && !loading ? <button onClick={() => join(1)} className="btn btn-primary">{home} to win</button> : <p style={{ fontSize: "12px" }}>{homePlayer}</p>}
+          {!homePlayer && !loading ? <button onClick={() => join(1)} className="btn btn-primary">{home} to win</button> : <p style={{ fontSize: "12px" }}>{homePlayer} bid NFT ID {homeNFT}</p>}
           {loading && <div><div className="spinner-border text-primary" role="status">
             <span className="sr-only "></span>
           </div></div>}
         </div>
       </div>
-      <div className="col-lg-2 col-md-12" style={{ 'padding-top': "16px" }}>
+      <div className="col-lg-2 col-md-12" style={{ 'paddingTop': "16px" }}>
         <p>Select Nft to wager</p>
         {nfts.length > 0 && <Select data={nfts} onChange={(e) => setTokenId(e.id)} />}</div>
       <div className="team-single col-lg-4 col-md-12">
         <span className="mdr">Away</span>
         <div className="img-area text-center" style={{ "width": "200px" }}>
           <img onClick={() => join(2)} src={awayImage} alt="image" />
-          {!awayPlayer && !loading ? <button onClick={() => join(2)} className="btn btn-primary">{away} to win</button> : <p style={{ fontSize: "12px" }}>{awayPlayer}</p>}
+          {!awayPlayer && !loading ? <button onClick={() => join(2)} className="btn btn-primary">{away} to win</button> : <p style={{ fontSize: "12px" }}>{awayPlayer} bid NFT ID {awayNFT}</p>}
           {loading && <div><div className="spinner-border text-primary" role="status">
             <span className="sr-only "></span>
           </div></div>}

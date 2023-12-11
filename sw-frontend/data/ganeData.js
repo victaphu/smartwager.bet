@@ -144,7 +144,7 @@ export function useFetchGames() {
   
   async function read() {
     const data = [];
-    for (let i = 10; i < 20; ++i) {
+    for (let i = 10; i < 30; ++i) {
       const res = (await readContract({
         address: common.wager,
         abi: abi,

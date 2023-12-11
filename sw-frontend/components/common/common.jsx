@@ -2,6 +2,7 @@ export default {
   wager: "0xF5037D7D3E5DF37c0521C4452EAB83a40d258Ed0",
   sampleNft: "0x56C1423ea54faEC00a7633aAA2F8Bf4A958fA0d2",
   claimNote: "0x6A1CB242421871361E7C87f08D1b17dfB176492e",
+  swnft: "0x9C1A28B6b1B14CB1f7CE756f99b99bf8318679Fd",
   sepolia: {
     claimNote: "0x5879960452be1E1c41fDD0E1F51376DC17a42584",
     chainlinkTokenEscrowService: "0x9692f4a851175a86Fa83caE65EAD7E9629c1caf1",
@@ -456,5 +457,21 @@ export const chainlinkTokenEscrowServiceABI = [
   {
     "stateMutability": "payable",
     "type": "receive"
+  }
+];
+
+export const stakeWiseWager = [
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "eventId",
+        "type": "uint256"
+      }
+    ],
+    "name": "createWager",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   }
 ];

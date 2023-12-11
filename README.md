@@ -10,9 +10,12 @@ CCIP -
 https://ccip.chain.link/msg/0xbfbbf3dca0538be4bf0df3e1d7dbe7b66e3d5e800b786f78dd74a2d0c15ad822 - After token mint, send it from Sepolia to Mumbai  
 https://ccip.chain.link/msg/0x8189d017cab27b3a414421faf1266811a0b472e20dcc09d02dcabb72ac4ba659 - Claim Note is burnt on Mumbai and NFT reclaimed on Sepolia side  
 
-Chainlink Functions - 
-Chainlink VRF - 
+Chainlink Functions (ID 24285257907087691622817243027000637480036284087421225229913691001399631052684) -  
+https://mumbai.polygonscan.com/tx/0xb9e618730dc075c8f2f518f783d80d1e3ebfb1d77bc52590a6da35093674d66c - Upkeep was performed when a wager result needed to be evaluated  
 
+
+Chainlink VRF (ID 6673)  -  
+https://mumbai.polygonscan.com/tx/0xaeaf201f5be245cbed757003f6105ec9ab4acb325b93aa8a920427bcb52adb52 - When the above upkeep function called our platform, it generated a random number that was then used as a wager result between the players 
 
 ## Tech Stack
 ### Staking NFTs

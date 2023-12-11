@@ -4,7 +4,12 @@ import Select from "../select/Select";
 import down_arrow from "/public/images/icon/down-arrow.png";
 import up_arrow from "/public/images/icon/up-arrow.png";
 import { format } from "date-fns";
-
+import { erc721ABI, useAccount, useContractRead } from "wagmi";
+import common, { stakeWiseWager } from "../common/common";
+import { polygonMumbai } from "viem/chains";
+import { createPublicClient, http } from "viem";
+import { ethers } from "ethers";
+import { waitForTransaction, prepareWriteContract, writeContract } from "@wagmi/core";
 
 const img1 = "https://i.seadn.io/gcs/files/2c41369cdfb2323fe991443e0df7b930.png?auto=format&dpr=1&w=1000";
 const img2 = "https://i.seadn.io/gae/qw71kH-wuhbe9rz8r7zOEbDawJG8X28-MRqv5NIMjMZEq8js3ED6URNlq0hdF1WkUifWM-ohusyU279CgDJD-A7954btXfgHl4wNQA?auto=format&dpr=1&w=384"
@@ -54,14 +59,75 @@ const BetpopUpModal = () => {
   const [away, setAway] = useState("");
   const [gameId, setGameId] = useState("");
   const [eventDate, setEventDate] = useState(0);
-
   const [games, setGames] = useState(_games);
+  const [nfts, setNfts] = useState([]);
+  const [tokenId, setTokenId] = useState(0);
+  const [loading, setLoading] = useState(false);
+
+  const [showCreate, setShowCreate] = useState(false);
+  const { address } = useAccount();
+
+  const getListNFTs = async () => {
+    const client = createPublicClient({
+      chain: polygonMumbai,
+      transport: http()
+    });
+
+    const nfts = [];
+
+    const total = 100;
+
+    const balance = await client.readContract({
+      address: common.claimNote,
+      abi: erc721ABI,
+      functionName: "balanceOf",
+      args: [address || common.sampleNft]
+    });
+
+    const offset = 0;
+
+    for (let i = 0; i < Number(total) && balance > 0; ++i) {
+      try {
+        const owner = await client.readContract({
+          address: common.claimNote,
+          abi: erc721ABI,
+          functionName: "ownerOf",
+          args: [i + offset]
+        });
+
+        if (owner === ethers.ZeroAddress) {
+          console.log("NFT rejected")
+          break;
+        }
+
+        if (owner === address) {
+          nfts.push({ id: i + offset, name: "NFT " + i });
+        }
+
+        if (balance === nfts.length) {
+          break; // break if we found all the nfts
+        }
+      }
+      catch (e) {
+        console.log(e);
+        break;
+      }
+    }
+
+    setNfts(nfts);
+
+    if (nfts.length > 0) {
+      setTokenId(nfts[0].id);
+    }
+
+    return nfts;
+  }
 
   const updateGame = (gameId, p1) => {
     const game = games.find(e => e.gameId === gameId);
 
     if (p1 && !game.player1) {
-      game.p1 = mapping[(idx++) & mapping.length];  
+      game.p1 = mapping[(idx++) & mapping.length];
       game.player1 = true;
     }
     if (!p1 && !game.player2) {
@@ -72,6 +138,7 @@ const BetpopUpModal = () => {
   }
 
   useEffect(() => {
+    getListNFTs();
     const handler = (e) => {
       console.log(e.relatedTarget.dataset);
       setHome(e.relatedTarget.dataset.home);
@@ -84,7 +151,52 @@ const BetpopUpModal = () => {
     return () => {
       document.getElementById('betpop-up').removeEventListener('show.bs.modal', handler);
     }
-  }, [])
+  }, []);
+
+  async function confirmWager(selection) {
+
+    setLoading(true);
+
+    try {
+      const sel = selection === 1 ? home : away;
+      if (!confirm(`Are you sure you want to wager NFT ${tokenId} that ${sel} will win?`)) {
+        return;
+      }
+
+      const request = await prepareWriteContract({
+        address: common.wager,
+        abi: stakeWiseWager,
+        functionName: "createWager",
+        args: [gameId]
+      });
+
+      // create game
+      const receipt = await waitForTransaction(await writeContract(request.request));
+      console.log('Game Created successfully', receipt);
+      
+
+      // transfer NFT
+      // await sampleERC721.connect(player1)['safeTransferFrom(address,address,uint256,bytes)'](player1.address, swnftAddress, 1, ethers.AbiCoder.defaultAbiCoder().encode(["uint256", "uint256"], [gameId, 1]));
+
+      const request2 = await prepareWriteContract({
+        address: common.claimNote,
+        abi: erc721ABI,
+        functionName: "safeTransferFrom",
+        args: [address, common.swnft, tokenId, ethers.AbiCoder.defaultAbiCoder().encode(["uint256", "uint256"], [gameId, selection])]
+      });
+
+      const receipt2 = await waitForTransaction(await writeContract(request.request));
+      console.log('NFT Transfer was successful!', receipt2);
+    }
+    catch (e) {
+      console.log('error', e);
+    }
+    finally {
+      setLoading(false);
+    }
+
+    setShowCreate(false);
+  }
 
   return (
     <div className="betpopmodal">
@@ -105,6 +217,9 @@ const BetpopUpModal = () => {
                       className="btn-close"
                       data-bs-dismiss="modal"
                       aria-label="Close"
+                      onClick={() => {
+                        setShowCreate(false);
+                      }}
                     ></button>
                   </div>
                   <div className="modal-body">
@@ -113,21 +228,35 @@ const BetpopUpModal = () => {
                         {home} will win
                       </button>
                       <button className="cmn-btn greenbutton" onClick={() => {
-
-                        const game = {
-                          "gameId": 29042 + games.length,
-                          "player1": false,
-                          "player2": false
-                        };
-
-                        setGames([game, ...games]);
+                        if (nfts.length === 0) {
+                          window.location.href = "/dashboard";
+                          return;
+                        }
+                        setShowCreate(true);
                       }}>
-                        Create Wager!
+                        {nfts.length > 0 ? "Create Wager!" : "Bridge NFT"}
                       </button>
                       <button className="cmn-btn lastTeam">
                         {away} will win
                       </button>
                     </div>
+                    {!loading && showCreate && <div className="top-item">
+                      <button className="cmn-btn greenbutton" onClick={() => confirmWager(1)}>{home} to Win</button>
+                      <div>
+                        <p>Select Nft to wager</p>
+                        {nfts.length > 0 && <Select data={nfts} onChange={(e) => setTokenId(e.id)} />}</div>
+                      <button className="cmn-btn greenbutton" onClick={() => confirmWager(2)}>{away} to Win</button>
+                    </div>}
+
+                    {
+                      loading && showCreate && <div className="top-item">
+                        <div className="spinner-border text-primary" role="status">
+                          <span className="sr-only "></span>
+                        </div>
+                        <p>Processing Wager!</p>
+                      </div>}
+
+
                     <div style={{ "display": "flex", "flexDirection": "column", "maxHeight": "500px", "overflowY": "scroll" }}>
                       {games.map((game, i) => {
                         return (<div style={{ "padding": "20px", "backgroundColor": i % 2 ? "blue" : "navy" }} key={i}>

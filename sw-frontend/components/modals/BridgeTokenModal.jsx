@@ -19,6 +19,8 @@ const BridgeTokenModal = () => {
   const [nftAddress, setNftAddress] = useState('');
   const [sourceChainId, setSourceChainId] = useState('');
 
+  const [explorerLink, setExplorerLink] = useState('');
+
   console.log(chainSelector, escrowAddress, nftAddress, sourceChainId);
 
   const { config, error } = usePrepareContractWrite({
@@ -53,13 +55,15 @@ const BridgeTokenModal = () => {
       args: [address || common.sampleNft]
     });
 
+    const offset = nftAddress === common.claimNote || nftAddress === common.sepolia.claimNote ? 0 : 1;
+
     for (let i = 0; i < Number(total) && balance > 0; ++i) {
       try {
         const owner = await client.readContract({
           address: nftAddress,
           abi: erc721ABI,
           functionName: "ownerOf",
-          args: [i + 1]
+          args: [i + offset]
         });
 
         if (owner === ethers.ZeroAddress) {
@@ -68,7 +72,7 @@ const BridgeTokenModal = () => {
         }
 
         if (owner === address) {
-          nfts.push({ id: i + 1, name: "NFT " + i });
+          nfts.push({ id: i + offset, name: "NFT " + i });
         }
 
         if (balance === nfts.length) {
@@ -149,7 +153,8 @@ const BridgeTokenModal = () => {
       const hash2 = await writeContract(request2.request);
       console.log(hash2);
       const res = await waitForTransaction(hash2);
-      console.log(res);
+      setExplorerLink(`https://ccip.chain.link/api/query?query=TRANSACTION_SEARCH_QUERY&variables=%7B%22msgIdOrTxnHash%22%3A%22${res.transactionHash}%22%7D`);
+      getListNFTs(); // refresh nfts
     }
     catch (e) {
       console.log(e);
@@ -169,6 +174,9 @@ const BridgeTokenModal = () => {
       setEscrowAddress(e.relatedTarget.dataset.escrowaddress);
       setNftAddress(e.relatedTarget.dataset.nftaddress);
       setSourceChainId(e.relatedTarget.dataset.sourcechainid);
+      if (e.relatedTarget.dataset.sourcechainid != sourceChainId) {
+        setExplorerLink("");
+      }
     };
     document.getElementById('bridgenft').addEventListener('show.bs.modal', handler);
 
@@ -235,7 +243,7 @@ const BridgeTokenModal = () => {
                         <span className="sr-only "></span>
                       </div>
                       </div>}
-
+                      {explorerLink.length > 0 && <p><a href={explorerLink} target="_blank" rel="noreferrer">View CCIP Status</a></p>}
                       {!sending && <button disabled={nfts.length == 0} onClick={startCCIP} className="mdr cmn-btn">Bridge NFT</button>}
                     </div>
                   </div>

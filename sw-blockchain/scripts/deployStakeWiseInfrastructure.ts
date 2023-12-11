@@ -59,7 +59,7 @@ async function setForwarder() {
 }
 
 async function updateWhitelist() {
-  const whitelist = "0xa874c8CafeAFE8937a92bC261a8Fe53aeA53F6DF";
+  const whitelist = "0x89D60FE741e0DD9731C1f18FdC04375c4E1CF241";
   const instance = await ethers.getContractAt("StakeWiseWhitelistNFT", whitelist);
   // await instance.setForwarder(forwarder);
   await (await instance.addWhitelistContract("0xf93B7198085AFc5948C02176908Db0701a180594")).wait();

@@ -9,7 +9,7 @@ const stakeWiseWagerServiceAddress = "0xF5037D7D3E5DF37c0521C4452EAB83a40d258Ed0
 async function main() {
   const swws = await ethers.getContractAt("StakeWiseWagerService", stakeWiseWagerServiceAddress);
   const snft = await ethers.getContractAt("SWNFT", await swws.swnft());
-  const nftId = 15; // Number(await snft.counter());
+  const nftId = 20; // Number(await snft.counter());
 
   const configs = [{
     active: true,
@@ -17,7 +17,7 @@ async function main() {
     description: "Sydney v Melbourne",
     name: "AFL Syd v Melbourne",
     eventId: nftId + 1,
-    eventDate: Math.floor(Date.now() / 1000) + 10800,
+    eventDate: Math.floor(Date.now() / 1000) + 3600 * 1.5,
     image: "",
     url: "", 
   }, {

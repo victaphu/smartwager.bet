@@ -93,7 +93,8 @@ const WithdrawTab = () => {
                     sampleNFT.refetch()
                     claimNote.refetch()
                   }} disabled={isLoading}>{isLoading ? "Minting Sample ERC721" : "Mint Sample ERC721"}</button>
-                  <button type="button" className="cmn-btn firstTeam" data-bs-toggle="modal" data-bs-target="#bridgenft">Withdraw Claim Note</button>
+                  <button type="button" className="cmn-btn firstTeam" data-bs-toggle="modal" data-bs-target="#bridgenft"
+                    data-chainselector={common.chainSelector.sepolia} data-escrowaddress={common.mumbai.chainlinkTokenEscrowService} data-nftaddress={common.claimNote} data-sourcechainid={common.chain.mumbai}>Withdraw Claim Note</button>
                 </div>
 
                 <p>Faucets</p>

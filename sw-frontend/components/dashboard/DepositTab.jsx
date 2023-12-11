@@ -6,7 +6,7 @@ import BridgeTokenModal from "../modals/BridgeTokenModal";
 
 const DepositTab = () => {
   const { address } = useAccount();
-  const [balances, setBalances] = useState({sample:0, claim: 0});
+  const [balances, setBalances] = useState({ sample: 0, claim: 0 });
 
   const { config, error } = usePrepareContractWrite({
     address: common.sampleNft,
@@ -60,7 +60,6 @@ const DepositTab = () => {
       role="tabpanel"
       aria-labelledby="deposit-tab"
     >
-      <BridgeTokenModal chainSelector={common.chainSelector.mumbai} escrowAddress={common.sepolia.chainlinkTokenEscrowService} nftAddress={common.sampleNft} sourceChainId={common.chain.sepolia}/>
       <div className="deposit-with-tab">
         <div className="row">
           <div className="col-xxl-4 col-xl-5">
@@ -92,11 +91,12 @@ const DepositTab = () => {
                     sampleNFT.refetch()
                     claimNote.refetch()
                   }} disabled={isLoading}>{isLoading ? "Minting Sample ERC721" : "Mint Sample ERC721"}</button>
-                  <button type="button" className="cmn-btn firstTeam" data-bs-toggle="modal" data-bs-target="#bridgenft">Bridge to StakeWise</button>
+                  <button type="button" className="cmn-btn firstTeam" data-bs-toggle="modal" data-bs-target="#bridgenft"
+                    data-chainselector={common.chainSelector.mumbai} data-escrowaddress={common.sepolia.chainlinkTokenEscrowService} data-nftaddress={common.sampleNft} data-sourcechainid={common.chain.sepolia}>Bridge to StakeWise</button>
                 </div>
 
                 <p>Faucets</p>
-                <div className="input-area" style={{textAlign: "center"}}>
+                <div className="input-area" style={{ textAlign: "center" }}>
                   <button type="button" className="cmn-btn firstTeam" onClick={() => window.open("https://faucet.polygon.technology/")}>Get more Matic</button>
                   <button type="button" className="cmn-btn firstTeam" onClick={() => window.open("https://sepoliafaucet.com/")}>Get more Sepolia</button>
                 </div>

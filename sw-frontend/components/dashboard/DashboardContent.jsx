@@ -1,6 +1,7 @@
 import { StakeWiseContext } from "@/context/context";
 import { useContext } from "react";
 import RightSide from "./RightSide";
+import BridgeTokenModal from "../modals/BridgeTokenModal";
 
 const DashboardContent = () => {
   const { url } = useContext(StakeWiseContext);
@@ -76,6 +77,8 @@ const DashboardContent = () => {
         </div>
         <div className="container">
           <div className="row justify-content-center">
+            
+            <BridgeTokenModal />
             {/* Right Side */}
             <RightSide />
           </div>

@@ -6,6 +6,9 @@ export default {
     claimNote: "0x5879960452be1E1c41fDD0E1F51376DC17a42584",
     chainlinkTokenEscrowService: "0x9692f4a851175a86Fa83caE65EAD7E9629c1caf1",
   },
+  mumbai: {
+    chainlinkTokenEscrowService: "0xB7C5A47449C179B8eD4f59082daa5E93F888Cb9f",
+  },
   chainSelector: {
     mumbai: "12532609583862916517",
     sepolia: "16015286601757825753"
